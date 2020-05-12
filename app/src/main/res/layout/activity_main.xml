@@ -5,7 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_activity_coordinator_layout"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+
+    >
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="false"
+        app:lottie_rawRes="@raw/maplocation" />
 
 
     <!-- MAIN CONTAINER -->
@@ -16,6 +31,7 @@
         android:orientation="vertical">
 
         <!-- IMAGE VIEW FIREBASE OC -->
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Go4Lunch</string>
 
-    <string name="main_activity_description">Discute avec tes mentors, tout simplement.</string>
+    <string name="main_activity_description">Find a nice restaurant and invite your co-workers for lunch!.</string>
 
     <string name="login">Connexion</string>
     <string name="chat_with_mentor">Discute avec un mentor</string>
