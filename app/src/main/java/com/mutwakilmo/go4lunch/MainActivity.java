@@ -34,7 +34,8 @@ public class MainActivity extends BaseActivity {
 
 
     // --------------------
-    // ACTIONS
+    // ACTIONS import com.facebook.FacebookSdk;
+    //import com.facebook.appevents.AppEventsLogger;
     // --------------------
     @Override
     public int getFragmentLayout() { return R.layout.activity_main;
@@ -60,7 +61,8 @@ public class MainActivity extends BaseActivity {
                         .setTheme(R.style.LoginTheme)
                         .setAvailableProviders(
                                 Arrays.asList(new AuthUI.IdpConfig.EmailBuilder().build(),
-                                        new AuthUI.IdpConfig.GoogleBuilder().build()))
+                                        new AuthUI.IdpConfig.GoogleBuilder().build(),
+                                        new AuthUI.IdpConfig.FacebookBuilder().build()))
                         //setIsSmartLockEnabled()in order to automatically offer the user a list of
                         // available emails to make it easier to register.
                         .setIsSmartLockEnabled(false, true)
@@ -118,6 +120,8 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
+
+
 }
 
 
