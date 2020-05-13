@@ -1,7 +1,31 @@
 <resources>
+    <!-- English -->
     <string name="app_name">Go4lunch</string>
 
     <string name="main_activity_description">Find a nice restaurant and invite your co-workers for lunch!.</string>
+
+
+    <!-- Strings for On Boarding Screen -->
+
+    <!-- Titles -->
+    <string name="first_slide_title">Welcome</string>
+    <string name="second_slide_title">Pin it</string>
+    <string name="third_slide_title">Chat</string>
+    <string name="fourth_slide_title">Have fun</string>
+
+    <!-- Description -->
+    <string name="first_slide_desc">Go4lunch will allow you to find restaurants near you and to share your restaurant choice with coworkers.</string>
+    <string name="second_slide_desc">All the nearby restaurants are shown on the map using custom pins.</string>
+    <string name="third_slide_desc">Just before the lunch break, the app will notify different employees and invite them to join their coworkers.</string>
+    <string name="fourth_slide_desc">Good lunch is all The Sweeter when Shared with Friends</string>
+
+    <!-- Buttons -->
+    <string name="skip_btn">Skip</string>
+    <string name="next_btn">Next</string>
+    <string name="let_get_started">Lets Get Started</string>
+
+
+    <!--French-->
 
     <string name="login">Connexion</string>
     <string name="chat_with_mentor">Discute avec un mentor</string>

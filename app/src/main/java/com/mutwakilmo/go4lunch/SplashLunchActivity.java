@@ -38,7 +38,7 @@ public class SplashLunchActivity extends AppCompatActivity {
 
         //Set Animation
         backgroundImage.setAnimation(sideAnim);
-      //  LaunchNext();
+        LaunchNext();
     }
 
 
@@ -48,7 +48,7 @@ public class SplashLunchActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(SplashLunchActivity.this, MainActivity.class);
+                Intent intent = new Intent(SplashLunchActivity.this, OnBoardingActivity.class);
                 startActivity(intent);
                 finish();
             }
