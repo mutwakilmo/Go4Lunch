@@ -1,6 +1,7 @@
 package com.mutwakilmo.go4lunch;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -15,7 +16,9 @@ import butterknife.ButterKnife;
 public class SplashLunchActivity extends AppCompatActivity {
 
 
-    public static final String LOG_TAG_SPLASH  = SplashLunchActivity.class.getSimpleName();
+    public static final String LOG_TAG_SPLASH = SplashLunchActivity.class.getSimpleName();
+
+    SharedPreferences onBoardingScreen;
 
     //Duration
     private final int SPLASH_TIMER = 5000;
@@ -33,25 +36,44 @@ public class SplashLunchActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         //Animation Hooks
-        sideAnim = AnimationUtils.loadAnimation(this,R.anim.side_anim);
-        bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
+        sideAnim = AnimationUtils.loadAnimation(this, R.anim.side_anim);
+        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_anim);
 
         //Set Animation
         backgroundImage.setAnimation(sideAnim);
-        LaunchNext();
+
+
+
+      new Handler().postDelayed(new Runnable() {
+          public void run() {
+              onBoardingScreen = getSharedPreferences("onBoardingScreen", MODE_PRIVATE);
+              boolean isFirstTime = onBoardingScreen.getBoolean("firstTime", true);
+
+              if (isFirstTime){
+                  SharedPreferences.Editor editor = onBoardingScreen.edit();
+                  editor.putBoolean("firstTime", false);
+                  editor.commit();
+                  Intent intent = new Intent(getApplicationContext(), OnBoardingActivity.class);
+                  startActivity(intent);
+                  finish();
+              } else {
+                  Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                  startActivity(intent);
+                  finish();
+              }
+
+
+          }
+      }, SPLASH_TIMER);
+
+
+
     }
 
-
-
-    private void LaunchNext(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                Intent intent = new Intent(SplashLunchActivity.this, OnBoardingActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }, SPLASH_TIMER);
-    }
 }
+
+
+
+
+
+

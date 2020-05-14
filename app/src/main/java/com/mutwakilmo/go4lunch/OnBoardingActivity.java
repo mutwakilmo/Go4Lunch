@@ -1,7 +1,13 @@
 package com.mutwakilmo.go4lunch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -12,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnPageChange;
 
 public class OnBoardingActivity extends AppCompatActivity {
 
@@ -26,6 +33,8 @@ public class OnBoardingActivity extends AppCompatActivity {
     Button nextBtn;
     @BindView(R.id.relativeLayout)
     RelativeLayout relativeLayout;
+    Animation animation;
+    int currentPosition;
 
 
     SliderAdapter sliderAdapter;
@@ -44,6 +53,25 @@ public class OnBoardingActivity extends AppCompatActivity {
         //for dots
         addDots(0);
         viewPager.addOnPageChangeListener(changeListener);
+        //remove status bar
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+    }
+
+
+    public void skip(View view){
+        startActivity(new Intent(this, MainActivity.class));
+
+    }
+
+    public void started(View view){
+        startActivity(new Intent(this, MainActivity.class));
+    }
+
+
+    public void next(View view){
+        viewPager.setCurrentItem(currentPosition+1);
+        finish();
 
     }
 
@@ -74,6 +102,19 @@ public class OnBoardingActivity extends AppCompatActivity {
         @Override
         public void onPageSelected(int position) {
            addDots(position);
+           currentPosition = position;
+
+           if (position == 0){
+               getStartedBtn.setVisibility(View.INVISIBLE);
+           } else if (position == 1){
+               getStartedBtn.setVisibility(View.INVISIBLE);
+           } else if (position == 2){
+               getStartedBtn.setVisibility(View.INVISIBLE);
+           } else {
+               animation = AnimationUtils.loadAnimation(OnBoardingActivity.this, R.anim.side_anim);
+               getStartedBtn.setAnimation(animation);
+               getStartedBtn.setVisibility(View.VISIBLE);
+           }
         }
 
         @Override
