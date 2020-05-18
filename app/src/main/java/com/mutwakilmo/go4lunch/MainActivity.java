@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
+    public static final String MAIN_TAG = MainActivity.class.getSimpleName();
     //For data
     // 1 - Identifier for Sing-In Activity
     public static final int RC_SIGN_IN  = 101;

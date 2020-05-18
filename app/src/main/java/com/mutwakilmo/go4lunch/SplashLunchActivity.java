@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -34,6 +35,7 @@ public class SplashLunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_lunch);
         ButterKnife.bind(this);
+        Log.d(LOG_TAG_SPLASH, "onCreate: splash screen");
 
         //Animation Hooks
         sideAnim = AnimationUtils.loadAnimation(this, R.anim.side_anim);

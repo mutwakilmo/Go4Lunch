@@ -3,6 +3,7 @@ package com.mutwakilmo.go4lunch;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnPageChange;
 
 public class OnBoardingActivity extends AppCompatActivity {
+    public static final String ON_BOARDING_TAG = OnBoardingActivity.class.getSimpleName();
 
 
     @BindView(R.id.slider)
@@ -45,6 +47,7 @@ public class OnBoardingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_on_boarding);
+        Log.d(ON_BOARDING_TAG, "onCreate: onBoarding screen ");
         //Initialize
         ButterKnife.bind(this);
         //call adapter
