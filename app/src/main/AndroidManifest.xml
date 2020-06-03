@@ -11,16 +11,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OnBoardingActivity"></activity>
-        <activity android:name=".SplashLunchActivity">
+
+        <!-- OnBoarding ACTIVITY -->
+        <activity android:name=".OnBoardingActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+
+        <!-- Splash ACTIVITY -->
+        <activity android:name=".SplashLunchActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MentorChatActivity" />
+
+        <!-- Profile ACTIVITY -->
         <activity android:name=".ProfileActivity" />
+
+        <!--  MAIN ACTIVITY -->
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoTitle"> <!-- DISABLE TOOLBAR IN MAIN ACTIVITY -->

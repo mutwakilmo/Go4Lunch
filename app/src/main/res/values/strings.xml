@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- English -->
     <string name="app_name">Go4lunch</string>
 
@@ -24,10 +24,12 @@
     <string name="next_btn">Next</string>
     <string name="let_get_started">Lets Get Started</string>
 
+    <string name="login">Sing-up</string>
+
 
     <!--French-->
 
-    <string name="login">Connexion</string>
+
     <string name="chat_with_mentor">Discute avec un mentor</string>
 
     <!-- NOTIFICATION SERVICE -->
@@ -65,10 +67,11 @@
     <string name="popup_title_permission_files_access">Cette application a besoin de permission pour fonctionner.</string>
     <string name="toast_title_no_image_chosen">Aucune image choisie&#8230;</string>
 
-    //facebook
-    <string name="facebook_app_id">691887181604550</string>
+    <!--ToDo fix facebook log-in error-->
 
-    <string name="facebook_login_protocol_scheme" translatable="false">fb691887181604550</string>
 
+    <!-- FACEBOOK PURPOSE -->
+    <string name="facebook_application_id" translatable="false">691887181604550</string>
+    <string name="facebook_login_protocol_scheme" translatable="false" tools:ignore="UnusedResources">fb691887181604550</string>
 
 </resources>

@@ -65,30 +65,19 @@
             android:layout_margin="@dimen/default_large_margin">
 
             <!-- BUTTON LOGIN -->
-            <Button
-                android:id="@+id/main_activity_button_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login"
-                android:textColor="#fff"
-                android:textSize="@dimen/default_text_size"
-                android:background="@drawable/button_radius_primary_color"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="@dimen/default_large_margin"
-                android:padding="@dimen/default_large_margin"/>
 
             <!-- BUTTON CHAT -->
+
             <Button
-                android:id="@+id/main_activity_button_chat"
+                android:id="@+id/main_activity_button_login"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/chat_with_mentor"
-                android:textColor="#fff"
-                android:textSize="@dimen/default_text_size"
-                android:background="@drawable/button_radius_accent_color"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="@dimen/default_large_margin"
-                android:padding="@dimen/default_large_margin"/>
+                android:background="@color/colorPrimary"
+                android:text="@string/login"
+                android:visibility="visible"/>
+
+
 
         </LinearLayout>
 
