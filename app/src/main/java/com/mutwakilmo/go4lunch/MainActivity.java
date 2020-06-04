@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
@@ -24,6 +25,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
+    //Getting login button
+    @BindView(R.id.main_activity_button_login)
+    Button buttonLogin;
     public static final String MAIN_TAG = MainActivity.class.getSimpleName();
     //For data
     // 1 - Identifier for Sing-In Activity
@@ -36,13 +40,29 @@ public class MainActivity extends BaseActivity {
     CoordinatorLayout coordinatorLayout;
 
 
-    // --------------------
-    // ACTIONS import com.facebook.FacebookSdk;
-    //import com.facebook.appevents.AppEventsLogger;
-    // --------------------
     @Override
     public int getFragmentLayout() {
         return R.layout.activity_main;
+    }
+
+
+    @OnClick(R.id.main_activity_button_login)
+    public void onClickLoginButton() {
+        //Start appropriate activity
+        if (this.isCurrentUserLogged()) {
+            this.mainScreenActivity();
+        } else {
+            this.startSignInActivity();
+        }
+    }
+    // --------------------
+    // NAVIGATION
+    // --------------------
+
+    //Launching
+    private void mainScreenActivity() {
+        Intent intent = new Intent(this, MainScreen.class);
+        startActivity(intent);
     }
 
 //**********************************************************************************************
@@ -58,6 +78,14 @@ public class MainActivity extends BaseActivity {
         view.setAnimation(animation);
         this.startSignInActivity();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 5 - Update UI when activity is resuming
+        this.updateUIWhenResuming();
+    }
+
 
     // --------------------
     // NAVIGATION
@@ -102,6 +130,11 @@ public class MainActivity extends BaseActivity {
     //show snack bar with a message
     private void showSnackBar(CoordinatorLayout coordinatorLayout, String message) {
         Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void updateUIWhenResuming(){
+        this.buttonLogin.setText(this.isCurrentUserLogged() ?
+                getString(R.string.button_login_text_logged) : getString(R.string.button_login_text_not_logged));
     }
 
 

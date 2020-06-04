@@ -24,13 +24,12 @@
     <string name="next_btn">Next</string>
     <string name="let_get_started">Lets Get Started</string>
 
-    <string name="login">Sing-up</string>
-
 
     <!--French-->
 
 
     <string name="chat_with_mentor">Discute avec un mentor</string>
+    <string name="login">Connexion</string>
 
     <!-- NOTIFICATION SERVICE -->
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
