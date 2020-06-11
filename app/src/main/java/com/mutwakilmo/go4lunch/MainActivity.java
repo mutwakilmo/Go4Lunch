@@ -17,6 +17,7 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.mutwakilmo.go4lunch.api.UserHelper;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -55,6 +56,22 @@ public class MainActivity extends BaseActivity {
             this.startSignInActivity();
         }
     }
+
+    // --------------------
+    // REST REQUEST
+    // --------------------
+    private void createUserInFirestore(){
+        if (this.getCurrentUser() != null){
+            String urlPicture = (this.getCurrentUser().getPhotoUrl() != null) ?
+                    this.getCurrentUser().getPhotoUrl().toString() : null;
+            String uid = this.getCurrentUser().getUid();
+            String username = this.getCurrentUser().getDisplayName();
+
+            UserHelper.createUser(uid, username, urlPicture).addOnFailureListener(this.onFailureListener());
+        }
+    }
+
+
     // --------------------
     // NAVIGATION
     // --------------------
@@ -149,6 +166,7 @@ public class MainActivity extends BaseActivity {
 
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) { // SUCCESS
+                this.createUserInFirestore();
 
                 showSnackBar(this.coordinatorLayout, getString(R.string.connection_succeed));
             } else { // ERRORS

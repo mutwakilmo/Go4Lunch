@@ -3,6 +3,7 @@ package com.mutwakilmo.go4lunch;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -18,13 +19,19 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.mutwakilmo.go4lunch.api.UserHelper;
+import com.mutwakilmo.go4lunch.models.User;
+
+import org.w3c.dom.Text;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProfileActivity extends BaseActivity {
-
+    // Creating identifier to identify REST REQUEST (Update username)
+    public static final int UPDATE_USERNAME = 30;
 
     //Identify each HTTP Request
     public static final int SING_OUT_TASK = 10;
@@ -45,7 +52,7 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
         //Update UI
-        this.UpdateWhenCreating();
+        this.UpdateUIWhenCreating();
 
     }
 
@@ -57,28 +64,7 @@ public class ProfileActivity extends BaseActivity {
     }
 
 
-    // --------------------
-    // UI
-    // --------------------
 
-    private void UpdateWhenCreating() {
-        if (this.getCurrentUser() != null){
-            Glide.with(this)
-                    .load(this.getCurrentUser().getPhotoUrl())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(imageViewProfile);
-        }
-        //Get email @ userName from Firebase
-        String email = TextUtils.isEmpty(this.getCurrentUser().getEmail())?
-                getString(R.string.info_no_email_found) : this.getCurrentUser().getEmail();
-
-        String username = TextUtils.isEmpty(this.getCurrentUser().getDisplayName()) ?
-                getString(R.string.info_no_username_found) : this.getCurrentUser().getDisplayName();
-
-        //Update views with data
-        this.textInputEditTextUsername.setText(username);
-        this.textViewEmail.setText(email);
-    }
 
 
     // --------------------
@@ -105,7 +91,21 @@ public class ProfileActivity extends BaseActivity {
     }
 
     @OnClick(R.id.profile_activity_button_update)
-    public void onClickUpdateButton() { }
+    public void onClickUpdateButton() {this.updateUserNameInFirebase(); }
+
+    //update userName
+    private void updateUserNameInFirebase() {
+        this.progressBar.setVisibility(View.VISIBLE);
+        String username = this.textInputEditTextUsername.getText().toString();
+
+        if (this.getCurrentUser() != null){
+            if (username.isEmpty() && username.equals(getString(R.string.info_no_username_found))){
+                UserHelper.updateUsername(username, this.getCurrentUser().getUid()).
+                        addOnFailureListener(this.onFailureListener()).addOnSuccessListener
+                        (this.updateUIAfterRESTRequestsCompleted(UPDATE_USERNAME));
+            }
+        }
+    }
 
 
     // --------------------
@@ -128,12 +128,48 @@ public class ProfileActivity extends BaseActivity {
         }
     }
 
+
+    // --------------------
+    // UI
+    // --------------------
+
+    private void UpdateUIWhenCreating() {
+       if (this.getCurrentUser() != null){
+           if (this.getCurrentUser().getPhotoUrl() != null){
+               Glide.with(this)
+                       .load(this.getCurrentUser().getPhotoUrl())
+                       .apply(RequestOptions.circleCropTransform())
+                       .into(imageViewProfile);
+           }
+
+           String email = TextUtils.isEmpty(this.getCurrentUser().getEmail()) ?
+                   getString(R.string.info_no_email_found) : this.getCurrentUser().getEmail();
+           this.textViewEmail.setText(email);
+
+           //Get additional data from FireStore (UserName)
+           UserHelper.getUser(this.getCurrentUser().getUid()).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+               @Override
+               public void onSuccess(DocumentSnapshot documentSnapshot) {
+                   User currentUser = documentSnapshot.toObject(User.class);
+                   String username = TextUtils.isEmpty(currentUser.getUsername()) ?
+                           getString(R.string.info_no_username_found) : currentUser.getUsername();
+                   textInputEditTextUsername.setText(username);
+               }
+           });
+       }
+    }
+
+
+
     //Create OnCompleteListener called after tasks ended
     private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
         return new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 switch (origin){
+                    case UPDATE_USERNAME:
+                        progressBar.setVisibility(View.INVISIBLE);
+                        break;
                     case SING_OUT_TASK:
                     finish();
                     break;

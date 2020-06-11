@@ -120,6 +120,14 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         startActivity(profileActivity);
     }
 
+    // ----------------------------
+    // CONFIGURATION ChatActivity
+    // ----------------------------
+    private void openChatActivity() {
+        Intent profileActivity = new Intent(MainScreen.this, ChatActivity.class);
+        startActivity(profileActivity);
+    }
+
 
 
 
@@ -156,6 +164,11 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.main_activity_drawer_chat:
+                drawer.closeDrawer(GravityCompat.START);
+                Log.d(TAG_LOG_MAIN, "onNavigationItemSelected:  your CHAT");
+                openChatActivity();
+                return true;
             case R.id.main_activity_drawer_lunch:
                 drawer.closeDrawer(GravityCompat.START);
                 Log.d(TAG_LOG_MAIN, "onNavigationItemSelected:  your lunch");

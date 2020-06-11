@@ -70,6 +70,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         ab.setDisplayHomeAsUpEnabled(true);
     }
 
+
+    // -------------------------------------------------------------------------------------------
+    // ERROR HANDLER
+    // Explanations: Here we're implementing the method  onFailureListener()  in BaseActivity which will
+    //be reused by all of our child activities. We'll use it only to tell whether Firestore did not return
+    // any errors to us during CRUD queries
+    // ------------------------------------------------------------------------------------------
     protected OnFailureListener onFailureListener(){
         return new OnFailureListener() {
             @Override
@@ -78,6 +85,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         };
     }
+
+
     // --------------------
     // UTILS
     // --------------------

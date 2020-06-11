@@ -7,20 +7,24 @@ android {
 
     defaultConfig {
         applicationId "com.mutwakilmo.go4lunch"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             minifyEnabled false
+            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    } //    Add this to your build.gradle for Butter knife
+    }
+
+
+    //    Add this to your build.gradle for Butter knife
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -29,8 +33,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
@@ -62,7 +64,12 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.3.1'
     // FirebaseUI
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+    implementation 'com.firebaseui:firebase-ui-firestore:3.1.3'
 
     // FACEBOOK LOGIN SUPPORT
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+
+    //Here sdk
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+
 }

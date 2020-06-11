@@ -6,6 +6,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/main_activity_drawer_chat"
+            android:title="CHAT"
+            android:icon="@drawable/ic_baseline_chat_24"/>
+        <item
             android:id="@+id/main_activity_drawer_lunch"
             android:title="YOUR LUNCH"
             android:icon="@drawable/ic_baseline_restaurant_menu_24"/>
