@@ -38,6 +38,8 @@ public class MapFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
+
     private void loadMapScene() {
         // Load a scene from the SDK to render the map with a map style.
         mapView.getMapScene().loadScene(MapStyle.NORMAL_DAY, new MapScene.LoadSceneCallback() {
@@ -52,6 +54,8 @@ public class MapFragment extends Fragment {
             }
         });
     }
+
+
 
 
     @Override

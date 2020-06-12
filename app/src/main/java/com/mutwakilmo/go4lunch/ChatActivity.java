@@ -1,8 +1,8 @@
 package com.mutwakilmo.go4lunch;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import com.mutwakilmo.go4lunch.base.BaseActivity;
 
 public class ChatActivity extends BaseActivity {
 

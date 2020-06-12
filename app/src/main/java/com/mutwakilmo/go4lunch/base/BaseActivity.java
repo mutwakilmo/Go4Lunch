@@ -1,4 +1,4 @@
-package com.mutwakilmo.go4lunch;
+package com.mutwakilmo.go4lunch.base;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.mutwakilmo.go4lunch.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
