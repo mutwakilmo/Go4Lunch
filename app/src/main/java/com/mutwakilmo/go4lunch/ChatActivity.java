@@ -16,4 +16,5 @@ public class ChatActivity extends BaseActivity {
     public int getFragmentLayout() {
         return 0;
     }
+    
 }
