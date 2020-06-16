@@ -21,6 +21,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.mutwakilmo.go4lunch.base.BaseActivity;
+import com.mutwakilmo.go4lunch.workmates_chat.ChatActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
