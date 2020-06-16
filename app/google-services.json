@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "105584343956-2ijldijqnrm008ibdv5uhsp7h9vs1c0f.apps.googleusercontent.com",
+          "client_id": "105584343956-c2uveukdgi35atct6afi99socja1bocn.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.mutwakilmo.go4lunch",
-            "certificate_hash": "f85267d3c3733bf1e4d236081c8dc38e309c1c61"
+            "certificate_hash": "90f28cbc61f21d14a246d24d5a415fee11397a5e"
           }
         },
         {

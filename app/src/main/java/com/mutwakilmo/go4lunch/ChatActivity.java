@@ -14,7 +14,7 @@ public class ChatActivity extends BaseActivity {
 
     @Override
     public int getFragmentLayout() {
-        return 0;
+        return R.layout.activity_chat;
     }
-    
+
 }

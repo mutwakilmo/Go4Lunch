@@ -6,35 +6,46 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mutwakilmo.go4lunch.models.User;
 
+
 public class UserHelper {
 
-    public static final String COLLECTION_NAME = "users";
-    //---COLLECTION REFERENCE
-    public static CollectionReference getUserCollection(){
+    private static final String COLLECTION_NAME = "users";
+
+    // --- COLLECTION REFERENCE ---
+
+    public static CollectionReference getUsersCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
+    // --- CREATE ---
 
-    //--Create---
-    public static Task<Void> createUser(String uid, String username, String urlPicture){
-        //Create User object
+    public static Task<Void> createUser(String uid, String username, String urlPicture) {
+        // 1 - Create Obj
         User userToCreate = new User(uid, username, urlPicture);
-        return UserHelper.getUserCollection().document(uid).set(userToCreate);
+
+        return UserHelper.getUsersCollection().document(uid).set(userToCreate);
     }
 
+    // --- GET ---
 
-    //--Get------
     public static Task<DocumentSnapshot> getUser(String uid){
-        return UserHelper.getUserCollection().document(uid).get();
-    }
-    //--Update-----
-    public static Task<Void> updateUsername(String username, String uid){
-    return UserHelper.getUserCollection().document(uid).update("username", username);
+        return UserHelper.getUsersCollection().document(uid).get();
     }
 
-    //---Delete--
-    public static Task<Void> deleteUser(String uid){
-        return UserHelper.getUserCollection().document(uid).delete();
+    // --- UPDATE ---
+
+    public static Task<Void> updateUsername(String username, String uid) {
+        return UserHelper.getUsersCollection().document(uid).update("username", username);
+    }
+
+    public static Task<Void> updateIsMentor(String uid, Boolean isMentor) {
+        return UserHelper.getUsersCollection().document(uid).update("isMentor", isMentor);
+    }
+
+    // --- DELETE ---
+
+    public static Task<Void> deleteUser(String uid) {
+        return UserHelper.getUsersCollection().document(uid).delete();
     }
 
 }
