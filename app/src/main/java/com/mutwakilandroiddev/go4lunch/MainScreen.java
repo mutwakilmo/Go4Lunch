@@ -60,16 +60,11 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        //I added this if statement to keep the selected fragment when rotating the device
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                    new MapFragment()).commit();
-//        }
 
-        //Fragment
-        fm.beginTransaction().add(R.id.main_container, fragment3, "3").hide(fragment3).commit();
-        fm.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
-        fm.beginTransaction().add(R.id.main_container,fragment1, "1").commit();
+
+
+
+
 
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -104,24 +99,25 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
 
                     switch (item.getItemId()) {
                         case R.id.nav_map:
-                           fm.beginTransaction().hide(active).show(fragment1).commit();
-                           active = fragment1;
-                           return true;
+                            selectedFragment =  new MapFragment();
+                            break;
 
                         case R.id.nav_list:
-                          fm.beginTransaction().hide(active).show(fragment2).commit();
-                          active = fragment2;
+                            selectedFragment = new ListFragment();
+                            break;
 
                         case R.id.nav_workmates:
-                            fm.beginTransaction().hide(active).show(fragment3).commit();
-                            active = fragment3;
-                            return true;
+                            selectedFragment = new WorkmatesFragment();
+                             break;
 
                     }
-                    return false;
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content,
+                            selectedFragment).commit();
+                    return true;
                 }
             };
 
