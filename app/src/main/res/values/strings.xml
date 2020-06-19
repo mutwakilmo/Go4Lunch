@@ -3,6 +3,8 @@
     <string name="app_name">Go4lunch</string>
 
     <string name="main_activity_description">Find a nice restaurant and invite your co-workers for lunch</string>
+    <string name="google_maps_API">AIzaSyA8i2BD0qfMpJILgiftbVqpT2lGzyaLCkc</string>
+
 
 
     <!-- Strings for On Boarding Screen -->

@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "105584343956",
-    "firebase_url": "https://go4lunch-db0c4.firebaseio.com",
-    "project_id": "go4lunch-db0c4",
-    "storage_bucket": "go4lunch-db0c4.appspot.com"
+    "project_number": "421494414382",
+    "firebase_url": "https://openclassroomsgo4lunch.firebaseio.com",
+    "project_id": "openclassroomsgo4lunch",
+    "storage_bucket": "openclassroomsgo4lunch.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:105584343956:android:13abe92a1bb5b00e422d81",
+        "mobilesdk_app_id": "1:421494414382:android:407deabfb04b0739f913bf",
         "android_client_info": {
-          "package_name": "com.mutwakilmo.go4lunch"
+          "package_name": "com.mutwakilandroiddev.go4lunch"
         }
       },
       "oauth_client": [
         {
-          "client_id": "105584343956-c2uveukdgi35atct6afi99socja1bocn.apps.googleusercontent.com",
+          "client_id": "421494414382-80c89kfft2tdbubqb6uv2s8lpj71qb0m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.mutwakilmo.go4lunch",
+            "package_name": "com.mutwakilandroiddev.go4lunch",
             "certificate_hash": "90f28cbc61f21d14a246d24d5a415fee11397a5e"
           }
         },
         {
-          "client_id": "105584343956-nm919cf2pv8gflfevq58tn28bpa74jfo.apps.googleusercontent.com",
+          "client_id": "421494414382-ften2qpnue5uetu2gal6pd261r2mshti.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAUjl8l6TQcaup151gYxTWbnAynfUWdtxA"
+          "current_key": "AIzaSyDXaVK4ERVdRvx6X7T2aTIU3TSVj1tW3A0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "105584343956-nm919cf2pv8gflfevq58tn28bpa74jfo.apps.googleusercontent.com",
+              "client_id": "421494414382-ften2qpnue5uetu2gal6pd261r2mshti.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
