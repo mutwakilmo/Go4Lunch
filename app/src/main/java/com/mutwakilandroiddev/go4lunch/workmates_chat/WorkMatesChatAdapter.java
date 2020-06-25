@@ -28,11 +28,11 @@ public class WorkMatesChatAdapter extends FirestoreRecyclerAdapter<Message, Mess
     //For COMMUNICATION
     private Listener callback;
 
-    public WorkMatesChatAdapter(@NonNull FirestoreRecyclerOptions<Message> options, RequestManager glide, String idCurrentUser, Listener callback) {
+    public WorkMatesChatAdapter(@NonNull FirestoreRecyclerOptions<Message> options, RequestManager glide, Listener callback, String idCurrentUser) {
         super(options);
         this.glide = glide;
-        this.idCurrentUser = idCurrentUser;
         this.callback = callback;
+        this.idCurrentUser = idCurrentUser;
     }
 
     @Override

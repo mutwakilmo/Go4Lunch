@@ -3,14 +3,8 @@
     package="com.mutwakilandroiddev.go4lunch">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-
-
-
-
 
     <application
         android:allowBackup="true"
@@ -20,14 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <meta-data android:name="com.here.sdk.access_key_id" android:value="9K_2CoO2UdykgW-Vcaz0IA" />
-        <meta-data android:name="com.here.sdk.access_key_secret" android:value="zRZnhTgPoFycfDUVon_7ZrbRDpMqyrTcedrvWSNBV_VGGRYeab47-cy5AB8uywoOyD41pN1OTIIIduHHKAWyNQ" />
-
-
-        <activity android:name=".workmates_chat.ChatActivity"></activity>
-
-
+        <activity android:name=".workmates_chat.ChatActivity" />
         <activity android:name=".MainScreen" /> <!-- MainScreen ACTIVITY -->
         <activity
             android:name=".OnBoardingActivity"
@@ -45,7 +32,8 @@
         </activity> <!-- Profile ACTIVITY -->
         <activity
             android:name=".ProfileActivity"
-            android:label="@string/toolbar_title_login_activity" /> <!-- MAIN ACTIVITY -->
+            android:label="@string/toolbar_title_login_activity"
+            android:parentActivityName=".MainScreen"/> <!-- MAIN ACTIVITY -->
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoTitle"> <!-- DISABLE TOOLBAR IN MAIN ACTIVITY -->
@@ -56,6 +44,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
 
         <meta-data
             android:name="preloaded_fonts"

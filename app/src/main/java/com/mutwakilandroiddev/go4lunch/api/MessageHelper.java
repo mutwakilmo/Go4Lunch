@@ -15,22 +15,16 @@ public class MessageHelper {
         return ChatHelper.getChatCollection().document(chat).collection(COLLECTION_NAME).orderBy("dateCreated").limit(50);
     }
 
-
-
     // --- CREATE ---
 
-    public static Task<DocumentReference> createMessageForChat(String textMessage, String chat,
-                                                               User userSender) {
-
-        //--Create the Message Object
-       Message message = new Message(textMessage,userSender);
-        //--Store Message to Fire store
-        return ChatHelper.getChatCollection()
-                .document(chat)
-                .collection(COLLECTION_NAME)
-                .add(message);
-
+    public static Task<DocumentReference> createMessageForChat(String textMessage, String chat, User userSender){
+        Message message = new Message(textMessage, userSender);
+        return ChatHelper.getChatCollection().document(chat).collection(COLLECTION_NAME).add(message);
     }
 
 
+    public static Task<DocumentReference> createMessageWithImageForChat(String urlImage, String textMessage, String chat, User userSender){
+        Message message = new Message(textMessage, urlImage, userSender);
+        return ChatHelper.getChatCollection().document(chat).collection(COLLECTION_NAME).add(message);
+    }
 }

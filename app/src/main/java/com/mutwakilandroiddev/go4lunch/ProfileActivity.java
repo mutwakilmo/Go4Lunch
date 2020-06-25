@@ -1,6 +1,7 @@
 package com.mutwakilandroiddev.go4lunch;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.mutwakilandroiddev.go4lunch.R;
+import com.mutwakilandroiddev.go4lunch.SplashLunchActivity;
 import com.mutwakilandroiddev.go4lunch.api.UserHelper;
 import com.mutwakilandroiddev.go4lunch.base.BaseActivity;
 import com.mutwakilandroiddev.go4lunch.models.User;
@@ -57,7 +60,11 @@ public class ProfileActivity extends BaseActivity {
     public void onClickUpdateButton() { this.updateUsernameInFirebase(); }
 
     @OnClick(R.id.profile_activity_button_sign_out)
-    public void onClickSignOutButton() { this.signOutUserFromFirebase(); }
+    public void onClickSignOutButton() {
+        this.signOutUserFromFirebase();
+        Intent intent = new Intent(getApplicationContext(), SplashLunchActivity.class);
+        startActivity(intent);
+    }
 
     @OnClick(R.id.profile_activity_button_delete)
     public void onClickDeleteButton() {
@@ -67,6 +74,8 @@ public class ProfileActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         deleteUserFromFirebase();
+                        Intent intent = new Intent(getApplicationContext(),SplashLunchActivity.class);
+                        startActivity(intent);
                     }
                 })
                 .setNegativeButton(R.string.popup_message_choice_no, null)
@@ -173,4 +182,5 @@ public class ProfileActivity extends BaseActivity {
             }
         };
     }
+
 }

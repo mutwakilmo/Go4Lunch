@@ -32,41 +32,29 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     //    update the various views from ViewHolder based on a Message object passed as a parameter.
     //---------------------------------------------------------------------------------------------
 
+    //ROOT VIEW
+    @BindView(R.id.activity_mentor_chat_item_root_view) RelativeLayout rootView;
 
+    //PROFILE CONTAINER
+    @BindView(R.id.activity_chat_item_profile_container) LinearLayout profileContainer;
+    @BindView(R.id.activity_chat_item_profile_container_profile_image) ImageView imageViewProfile;
+    @BindView(R.id.activity_chat_item_profile_container_is_mentor_image) ImageView imageViewIsMentor;
 
-    //For Data
+    //MESSAGE CONTAINER
+    @BindView(R.id.activity_mentor_chat_item_message_container) RelativeLayout messageContainer;
+    //IMAGE SEND-ed CONTAINER
+    @BindView(R.id.activity_chat_item_message_container_image_sent_cardview) CardView cardViewImageSent;
+    @BindView(R.id.activity_chat_item_message_container_image_sent_cardview_image) ImageView imageViewSent;
+    //TEXT MESSAGE CONTAINER
+    @BindView(R.id.activity_chat_item_message_container_text_message_container) LinearLayout textMessageContainer;
+    @BindView(R.id.activity_chat_item_message_container_text_message_container_text_view) TextView textViewMessage;
+    //DATE TEXT
+    @BindView(R.id.activity_chat_item_message_container_text_view_date) TextView textViewDate;
+
+    //FOR DATA
     private final int colorCurrentUser;
     private final int colorRemoteUser;
 
-
-    //ROOT VIEW
-    @BindView(R.id.activity_mentor_chat_item_root_view)
-    RelativeLayout rootView;
-
-    //PROFILE CONTAINER
-    @BindView(R.id.activity_mentor_chat_item_profile_container)
-    LinearLayout profileContainer;
-    @BindView(R.id.activity_mentor_chat_item_profile_container_profile_image)
-    ImageView imageViewProfile;
-    @BindView(R.id.activity_mentor_chat_item_profile_container_is_mentor_image)
-    ImageView imageViewIsMentor;
-
-    //MESSAGE CONTAINER
-    @BindView(R.id.activity_mentor_chat_item_message_container)
-    RelativeLayout messageContainer;
-    //IMAGE SENDED CONTAINER
-    @BindView(R.id.activity_mentor_chat_item_message_container_image_sent_cardview)
-    CardView cardViewImageSent;
-    @BindView(R.id.activity_mentor_chat_item_message_container_image_sent_cardview_image)
-    ImageView imageViewSent;
-    //TEXT MESSAGE CONTAINER
-    @BindView(R.id.activity_mentor_chat_item_message_container_text_message_container)
-    LinearLayout textMessageContainer;
-    @BindView(R.id.activity_mentor_chat_item_message_container_text_message_container_text_view)
-    TextView textViewMessage;
-    //DATE TEXT
-    @BindView(R.id.activity_mentor_chat_item_message_container_text_view_date)
-    TextView textViewDate;
 
     //--Constructor
     public MessageViewHolder(@NonNull View itemView) {
@@ -77,8 +65,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    //_______________________________________________________________________________________//
-    public void updateWithMessage(Message message, String currentUserId, RequestManager glide) {
+    public void updateWithMessage(Message message, String currentUserId, RequestManager glide){
+
         // Check if current user is the sender
         Boolean isCurrentUser = message.getUserSender().getUid().equals(currentUserId);
 
@@ -87,8 +75,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         this.textViewMessage.setTextAlignment(isCurrentUser ? View.TEXT_ALIGNMENT_TEXT_END : View.TEXT_ALIGNMENT_TEXT_START);
 
         // Update date TextView
-        if (message.getDateCreated() != null)
-            this.textViewDate.setText(this.convertDateToHour(message.getDateCreated()));
+        if (message.getDateCreated() != null) this.textViewDate.setText(this.convertDateToHour(message.getDateCreated()));
 
         // Update isMentor ImageView
         this.imageViewIsMentor.setVisibility(message.getUserSender().getIsMentor() ? View.VISIBLE : View.INVISIBLE);
@@ -100,7 +87,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                     .into(imageViewProfile);
 
         // Update image sent ImageView
-        if (message.getUrlImage() != null) {
+        if (message.getUrlImage() != null){
             glide.load(message.getUrlImage())
                     .into(imageViewSent);
             this.imageViewSent.setVisibility(View.VISIBLE);
@@ -115,9 +102,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         this.updateDesignDependingUser(isCurrentUser);
     }
 
+    private void updateDesignDependingUser(Boolean isSender){
 
-    //_______________________________________________________________________________________//
-    public void updateDesignDependingUser(Boolean isSender) {
         // PROFILE CONTAINER
         RelativeLayout.LayoutParams paramsLayoutHeader = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         paramsLayoutHeader.addRule(isSender ? RelativeLayout.ALIGN_PARENT_RIGHT : RelativeLayout.ALIGN_PARENT_LEFT);
@@ -125,20 +111,21 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
 
         // MESSAGE CONTAINER
         RelativeLayout.LayoutParams paramsLayoutContent = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        paramsLayoutContent.addRule(isSender ? RelativeLayout.LEFT_OF : RelativeLayout.RIGHT_OF, R.id.activity_mentor_chat_item_profile_container);
+        paramsLayoutContent.addRule(isSender ? RelativeLayout.LEFT_OF : RelativeLayout.RIGHT_OF, R.id.activity_chat_item_profile_container);
         this.messageContainer.setLayoutParams(paramsLayoutContent);
 
-        // CARDVIEW IMAGE SEND
+        // CARD-VIEW IMAGE SEND
         RelativeLayout.LayoutParams paramsImageView = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        paramsImageView.addRule(isSender ? RelativeLayout.ALIGN_LEFT : RelativeLayout.ALIGN_RIGHT, R.id.activity_mentor_chat_item_message_container_text_message_container);
+        paramsImageView.addRule(isSender ? RelativeLayout.ALIGN_LEFT : RelativeLayout.ALIGN_RIGHT, R.id.activity_chat_item_message_container_text_message_container);
         this.cardViewImageSent.setLayoutParams(paramsImageView);
 
         this.rootView.requestLayout();
     }
 
-    //--Convert date to hour
-    private String convertDateToHour(Date date) {
-        DateFormat dftime = new SimpleDateFormat("EEEE, dd MMMM yyyy");
-        return dftime.format(date);
+    // ---
+
+    private String convertDateToHour(Date date){
+        DateFormat dfTime = new SimpleDateFormat("HH:mm");
+        return dfTime.format(date);
     }
 }

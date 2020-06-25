@@ -51,20 +51,12 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
         ButterKnife.bind(this);
         this.configureNavigationView();
 
 
-
-
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-
-
-
-
-
 
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -89,9 +81,6 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
 
-
-
-
     // --------------------
     // BottomNavigationView
     // --------------------
@@ -103,7 +92,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
                     switch (item.getItemId()) {
                         case R.id.nav_map:
-                            selectedFragment =  new MapFragment();
+                            selectedFragment = new MapFragment();
                             break;
 
                         case R.id.nav_list:
@@ -112,7 +101,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
                         case R.id.nav_workmates:
                             selectedFragment = new WorkmatesFragment();
-                             break;
+                            break;
 
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content,
@@ -135,19 +124,20 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     private void openChatActivity() {
         Intent chatActivity = new Intent(MainScreen.this, ChatActivity.class);
 
-        if (this.isCurrentUserLogged()){
+
+        if (this.isCurrentUserLogged()) {
             startActivity(chatActivity);
         } else {
-           ////////////////////
+            ////////////////////
         }
+
+
     }
-
-
 
 
     private void configureNavigationView() {
 
-     navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
 
         if (this.getCurrentUser() != null) {
             // Customize image profile
@@ -194,10 +184,15 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 return true;
             case R.id.main_activity_drawer_logout:
                 drawer.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(getApplicationContext(), SplashLunchActivity.class);
+                startActivity(intent);
                 Log.d(TAG_LOG_MAIN, "onNavigationItemSelected: logout");
                 return true;
             default:
                 return false;
-    }}
+        }
+    }
 }
+
+
 

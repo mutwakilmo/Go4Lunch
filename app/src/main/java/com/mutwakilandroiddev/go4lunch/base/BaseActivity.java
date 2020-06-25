@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -21,35 +22,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     // LIFE CYCLE
     // --------------------
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(this.getFragmentLayout());
-        ButterKnife.bind(this);
-
-        // --------------------
-        // get Release Key Hash for facebook programmatically
-        // --------------------
-       /* try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    getPackageName(),
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest messageDigest = MessageDigest.getInstance("SHA");
-                messageDigest.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
-            }
-        }
-        catch (PackageManager.NameNotFoundException e) {
-
-        }
-        catch (NoSuchAlgorithmException e) {
-
-        }*/
+        ButterKnife.bind(this); //Configure Butterknife
     }
-
-
 
     public abstract int getFragmentLayout();
 
@@ -57,18 +35,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     // UI
     // --------------------
 
-//    protected void configureToolbar(){
-//        ActionBar ab = getSupportActionBar();
-//        ab.setDisplayHomeAsUpEnabled(true);
-//    }
+    protected void configureToolbar(){
+        ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+    }
 
-
-    // -------------------------------------------------------------------------------------------
+    // --------------------
     // ERROR HANDLER
-    // Explanations: Here we're implementing the method  onFailureListener()  in BaseActivity which will
-    //be reused by all of our child activities. We'll use it only to tell whether Firestore did not return
-    // any errors to us during CRUD queries
-    // ------------------------------------------------------------------------------------------
+    // --------------------
+
     protected OnFailureListener onFailureListener(){
         return new OnFailureListener() {
             @Override
@@ -78,17 +53,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         };
     }
 
-
     // --------------------
     // UTILS
     // --------------------
 
     @Nullable
-    protected FirebaseUser getCurrentUser(){
-        return FirebaseAuth.getInstance().getCurrentUser();
-    }
+    protected FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
 
-    protected boolean isCurrentUserLogged(){
-        return (this.getCurrentUser() != null);
-    }
+    protected Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
 }
