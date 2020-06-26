@@ -30,10 +30,14 @@ import butterknife.OnClick;
 public class ProfileActivity extends BaseActivity {
 
     //FOR DESIGN
-    @BindView(R.id.profile_activity_imageview_profile) ImageView imageViewProfile;
-    @BindView(R.id.profile_activity_edit_text_username) TextInputEditText textInputEditTextUsername;
-    @BindView(R.id.profile_activity_text_view_email) TextView textViewEmail;
-    @BindView(R.id.profile_activity_progress_bar) ProgressBar progressBar;
+    @BindView(R.id.profile_activity_imageview_profile)
+    ImageView imageViewProfile;
+    @BindView(R.id.profile_activity_edit_text_username)
+    TextInputEditText textInputEditTextUsername;
+    @BindView(R.id.profile_activity_text_view_email)
+    TextView textViewEmail;
+    @BindView(R.id.profile_activity_progress_bar)
+    ProgressBar progressBar;
     @BindView(R.id.profile_activity_check_box_is_mentor)
     CheckBox checkBoxIsMentor; // 1 - Adding CheckBox Mentor View
 
@@ -50,14 +54,18 @@ public class ProfileActivity extends BaseActivity {
     }
 
     @Override
-    public int getFragmentLayout() { return R.layout.activity_profile; }
+    public int getFragmentLayout() {
+        return R.layout.activity_profile;
+    }
 
     // --------------------
     // ACTIONS
     // --------------------
 
     @OnClick(R.id.profile_activity_button_update)
-    public void onClickUpdateButton() { this.updateUsernameInFirebase(); }
+    public void onClickUpdateButton() {
+        this.updateUsernameInFirebase();
+    }
 
     @OnClick(R.id.profile_activity_button_sign_out)
     public void onClickSignOutButton() {
@@ -74,7 +82,7 @@ public class ProfileActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         deleteUserFromFirebase();
-                        Intent intent = new Intent(getApplicationContext(),SplashLunchActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), SplashLunchActivity.class);
                         startActivity(intent);
                     }
                 })
@@ -83,19 +91,21 @@ public class ProfileActivity extends BaseActivity {
     }
 
     @OnClick(R.id.profile_activity_check_box_is_mentor)
-    public void onClickCheckBoxIsMentor() { this.updateUserIsMentor(); }
+    public void onClickCheckBoxIsMentor() {
+        this.updateUserIsMentor();
+    }
 
     // --------------------
     // REST REQUESTS
     // --------------------
 
-    private void signOutUserFromFirebase(){
+    private void signOutUserFromFirebase() {
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnSuccessListener(this, this.updateUIAfterRESTRequestsCompleted(SIGN_OUT_TASK));
     }
 
-    private void deleteUserFromFirebase(){
+    private void deleteUserFromFirebase() {
         if (this.getCurrentUser() != null) {
 
             //4 - We also delete user from firestore storage
@@ -108,20 +118,20 @@ public class ProfileActivity extends BaseActivity {
     }
 
     // 3 - Update User Username
-    private void updateUsernameInFirebase(){
+    private void updateUsernameInFirebase() {
 
         this.progressBar.setVisibility(View.VISIBLE);
         String username = this.textInputEditTextUsername.getText().toString();
 
-        if (this.getCurrentUser() != null){
-            if (!username.isEmpty() &&  !username.equals(getString(R.string.info_no_username_found))){
+        if (this.getCurrentUser() != null) {
+            if (!username.isEmpty() && !username.equals(getString(R.string.info_no_username_found))) {
                 UserHelper.updateUsername(username, this.getCurrentUser().getUid()).addOnFailureListener(this.onFailureListener()).addOnSuccessListener(this.updateUIAfterRESTRequestsCompleted(UPDATE_USERNAME));
             }
         }
     }
 
     // 2 - Update User Mentor (is or not)
-    private void updateUserIsMentor(){
+    private void updateUserIsMentor() {
         if (this.getCurrentUser() != null) {
             UserHelper.updateIsMentor(this.getCurrentUser().getUid(), this.checkBoxIsMentor.isChecked()).addOnFailureListener(this.onFailureListener());
         }
@@ -131,9 +141,9 @@ public class ProfileActivity extends BaseActivity {
     // UI
     // --------------------
 
-    private void updateUIWhenCreating(){
+    private void updateUIWhenCreating() {
 
-        if (this.getCurrentUser() != null){
+        if (this.getCurrentUser() != null) {
 
             //Get picture URL from Firebase
             if (this.getCurrentUser().getPhotoUrl() != null) {
@@ -162,11 +172,11 @@ public class ProfileActivity extends BaseActivity {
         }
     }
 
-    private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin){
+    private OnSuccessListener<Void> updateUIAfterRESTRequestsCompleted(final int origin) {
         return new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                switch (origin){
+                switch (origin) {
                     case UPDATE_USERNAME:
                         progressBar.setVisibility(View.INVISIBLE);
                         break;

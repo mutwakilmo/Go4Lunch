@@ -17,7 +17,7 @@ public class WorkMatesChatAdapter extends FirestoreRecyclerAdapter<Message, Mess
     //Explanations: We have created an Adapter here that looks fairly simple at first. However,
     //it inherits from FirestoreRecyclerAdapter, an object available in the library FirebaseUI.
     //--------------------------------------------------------------------------------------------
-    public interface Listener{
+    public interface Listener {
         void onDataChanged();
     }
 

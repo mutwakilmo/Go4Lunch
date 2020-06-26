@@ -1,15 +1,24 @@
 package com.mutwakilandroiddev.go4lunch;
 
+
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+
 import android.widget.ImageView;
 
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,37 +45,43 @@ public class SplashLunchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_lunch);
         ButterKnife.bind(this);
         Log.d(LOG_TAG_SPLASH, "onCreate: splash screen");
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    getPackageName(),
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest messageDigest = MessageDigest.getInstance("SHA");
+                messageDigest.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
 
-        //Animation Hooks
-        sideAnim = AnimationUtils.loadAnimation(this, R.anim.side_anim);
-        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_anim);
+        } catch (NoSuchAlgorithmException e) {
 
-        //Set Animation
-        backgroundImage.setAnimation(sideAnim);
+        }
 
 
-
-      new Handler().postDelayed(new Runnable() {
-          public void run() {
-              onBoardingScreen = getSharedPreferences("onBoardingScreen", MODE_PRIVATE);
-              boolean isFirstTime = onBoardingScreen.getBoolean("firstTime", true);
-              if (isFirstTime){
-                  SharedPreferences.Editor editor = onBoardingScreen.edit();
-                  editor.putBoolean("firstTime", false);
-                  editor.commit();
-                  Intent intent = new Intent(getApplicationContext(),OnBoardingActivity.class);
-                  startActivity(intent);
-              } else {
-                  Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                  startActivity(intent);
-              }
-              finish();
-          }
-      }, SPLASH_TIMER);
-
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                onBoardingScreen = getSharedPreferences("onBoardingScreen", MODE_PRIVATE);
+                boolean isFirstTime = onBoardingScreen.getBoolean("firstTime", true);
+                if (isFirstTime) {
+                    SharedPreferences.Editor editor = onBoardingScreen.edit();
+                    editor.putBoolean("firstTime", false);
+                    editor.commit();
+                    Intent intent = new Intent(getApplicationContext(), OnBoardingActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+                finish();
+            }
+        }, SPLASH_TIMER);
 
 
     }
+
 
 }
 

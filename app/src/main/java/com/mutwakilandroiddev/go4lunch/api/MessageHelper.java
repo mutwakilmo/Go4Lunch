@@ -21,7 +21,11 @@ public class MessageHelper {
         Message message = new Message(textMessage, userSender);
         return ChatHelper.getChatCollection().document(chat).collection(COLLECTION_NAME).add(message);
     }
-
+//-------------------------------------------------------------------------------------------------------
+//    This is nothing too complicated, we're just implementing a method to enable us to create a Message object containing
+//    the URL of a previously sent image, then we're saving that Message in Firestore.
+//    So I can't send that message until I have a
+//    -------------------------------------------------------------------------------------------------------
 
     public static Task<DocumentReference> createMessageWithImageForChat(String urlImage, String textMessage, String chat, User userSender){
         Message message = new Message(textMessage, urlImage, userSender);

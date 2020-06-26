@@ -23,8 +23,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.mutwakilandroiddev.go4lunch.R;
 import com.mutwakilandroiddev.go4lunch.api.MessageHelper;
 import com.mutwakilandroiddev.go4lunch.api.UserHelper;
@@ -32,10 +34,12 @@ import com.mutwakilandroiddev.go4lunch.base.BaseActivity;
 import com.mutwakilandroiddev.go4lunch.models.Message;
 import com.mutwakilandroiddev.go4lunch.models.User;
 
+import java.util.UUID;
+
 import javax.annotation.Nullable;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import butterknife.OnClick;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -47,14 +51,19 @@ public class ChatActivity extends BaseActivity implements WorkMatesChatAdapter.L
 
 
     // FOR DESIGN
-    @BindView(R.id.activity_chat_recycler_view) RecyclerView recyclerView;
-    @BindView(R.id.activity_chat_text_view_recycler_view_empty) TextView textViewRecyclerViewEmpty;
-    @BindView(R.id.activity_chat_message_edit_text) TextInputEditText editTextMessage;
-    @BindView(R.id.activity_chat_image_chosen_preview) ImageView imageViewPreview;
+    @BindView(R.id.activity_chat_recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.activity_chat_text_view_recycler_view_empty)
+    TextView textViewRecyclerViewEmpty;
+    @BindView(R.id.activity_chat_message_edit_text)
+    TextInputEditText editTextMessage;
+    @BindView(R.id.activity_chat_image_chosen_preview)
+    ImageView imageViewPreview;
 
     // FOR DATA
     private WorkMatesChatAdapter workMatesChatAdapter;
-    @Nullable private User modelCurrentUser;
+    @Nullable
+    private User modelCurrentUser;
     private String currentChatName;
     private Uri uriImageSelected;
 
@@ -67,10 +76,6 @@ public class ChatActivity extends BaseActivity implements WorkMatesChatAdapter.L
     private static final String PERMS = Manifest.permission.READ_EXTERNAL_STORAGE;
     private static final int RC_IMAGE_PERMS = 100;
     private static final int RC_CHOOSE_PHOTO = 200;
-
-
-
-
 
 
     @Override
@@ -94,29 +99,58 @@ public class ChatActivity extends BaseActivity implements WorkMatesChatAdapter.L
     // --------------------
 
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //results for EasyPermissions
-        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults,this);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     @OnClick(R.id.activity_chat_send_button)
     public void onClickSendMessage() {
         // 1 - Check if text field is not empty and current user properly downloaded from Firestore
         if (!TextUtils.isEmpty(editTextMessage.getText()) && modelCurrentUser != null){
-            // 2 - Create a new Message to Fires tore
-            MessageHelper.createMessageForChat(editTextMessage.getText().toString(), this.currentChatName, modelCurrentUser).addOnFailureListener(this.onFailureListener());
-            // 3 - Reset text field
-            this.editTextMessage.setText("");
+            // Check if the ImageView is set
+            if (this.imageViewPreview.getDrawable() == null) {
+                // SEND A TEXT MESSAGE
+                MessageHelper.createMessageForChat(editTextMessage.getText().toString(), this.currentChatName, modelCurrentUser).addOnFailureListener(this.onFailureListener());
+                this.editTextMessage.setText("");
+            } else {
+                // SEND A IMAGE + TEXT IMAGE
+                this.uploadPhotoInFirebaseAndSendMessage(editTextMessage.getText().toString());
+                this.editTextMessage.setText("");
+                this.imageViewPreview.setImageDrawable(null);
+            }
         }
     }
 
-    @OnClick({ R.id.activity_chat_lunch_chat_button, R.id.activity_chat_fun_chat_button, R.id.activity_chat_work_chat_button})
+
+    //Todo check with my mentor fire base storage
+
+    //upload a picture in Firebase and send a message
+    private void uploadPhotoInFirebaseAndSendMessage(final String message) {
+        String uuid = UUID.randomUUID().toString(); //GENERATE UNIQUE STRING
+        //A - upload
+        StorageReference mImageRef = FirebaseStorage.getInstance().getReference(uuid);
+        mImageRef.putFile(this.uriImageSelected)
+                .addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                       // String pathImageSavedInFirebase = taskSnapshot.getMetadata().getDownloadUrl().toString();
+                        String pathImageSavedInFirebase  = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                        // B - SAVE MESSAGE IN FIRE STORE
+                        MessageHelper.createMessageWithImageForChat(pathImageSavedInFirebase, message, currentChatName, modelCurrentUser).addOnFailureListener(onFailureListener());
+                    }
+                })
+                .addOnFailureListener(this.onFailureListener());
+    }
+    
+
+
+    @OnClick({R.id.activity_chat_lunch_chat_button, R.id.activity_chat_fun_chat_button, R.id.activity_chat_work_chat_button})
     public void onClickChatButtons(TextView textView) {
         // 8 - Re-Configure the RecyclerView depending chosen chat
-        switch (Integer.valueOf(textView.getTag().toString())){
+        switch (Integer.valueOf(textView.getTag().toString())) {
             case 10:
                 this.configureRecyclerView(CHAT_NAME_LUNCH);
                 break;
@@ -130,8 +164,6 @@ public class ChatActivity extends BaseActivity implements WorkMatesChatAdapter.L
     }
 
 
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -140,17 +172,17 @@ public class ChatActivity extends BaseActivity implements WorkMatesChatAdapter.L
     }
 
 
-
     @OnClick(R.id.activity_chat_add_file_button)
     @AfterPermissionGranted(RC_IMAGE_PERMS)
-    public void onClickAddFile() { this.chooseImageFromPhone(); }
-
+    public void onClickAddFile() {
+        this.chooseImageFromPhone();
+    }
 
 
     private void chooseImageFromPhone() {
-        if (!EasyPermissions.hasPermissions(this, PERMS)){
+        if (!EasyPermissions.hasPermissions(this, PERMS)) {
             EasyPermissions.requestPermissions(this,
-                    getString(R.string.popup_title_permission_files_access),RC_IMAGE_PERMS,PERMS);
+                    getString(R.string.popup_title_permission_files_access), RC_IMAGE_PERMS, PERMS);
             return;
         }
         //Launch an "Selection Image" Activity
@@ -161,37 +193,34 @@ public class ChatActivity extends BaseActivity implements WorkMatesChatAdapter.L
     //  Handle activity response (after user has chosen or not a picture)
 
     private void handleResponse(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RC_CHOOSE_PHOTO){
-            if (requestCode ==RC_CHOOSE_PHOTO){
+        if (requestCode == RC_CHOOSE_PHOTO) {
+            if (requestCode == RC_CHOOSE_PHOTO) {
                 this.uriImageSelected = data.getData();
                 Glide.with(this)
                         .load(this.uriImageSelected)
                         .apply(RequestOptions.centerCropTransform())
                         .into(this.imageViewPreview);
             } else {
-                Toast.makeText(this, getString(R.string.toast_title_no_image_chosen),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_title_no_image_chosen), Toast.LENGTH_SHORT).show();
             }
         }
     }
-
-
 
 
     // --------------------
     // REST REQUESTS
     // --------------------
     // 4 - Get Current User from Firestore
-    private void getCurrentUserFromFirestore(){
+    private void getCurrentUserFromFirestore() {
         UserHelper.getUser(getCurrentUser().getUid()).addOnSuccessListener(documentSnapshot -> modelCurrentUser = documentSnapshot.toObject(User.class));
     }
-
 
 
     // --------------------
     // REST REQUESTS
     // --------------------
 
-    private void configureRecyclerView(String chatName){
+    private void configureRecyclerView(String chatName) {
         //Track current chat name
         this.currentChatName = chatName;
         //Configure Adapter & RecyclerView
@@ -207,7 +236,7 @@ public class ChatActivity extends BaseActivity implements WorkMatesChatAdapter.L
     }
 
     //---Create options for RecyclerView from a Query
-    private FirestoreRecyclerOptions<Message> generateOptionsForAdapter(Query query){
+    private FirestoreRecyclerOptions<Message> generateOptionsForAdapter(Query query) {
         return new FirestoreRecyclerOptions.Builder<Message>()
                 .setQuery(query, Message.class)
                 .setLifecycleOwner(this)
@@ -216,12 +245,10 @@ public class ChatActivity extends BaseActivity implements WorkMatesChatAdapter.L
     }
 
 
-
-
     @Override
     public void onDataChanged() {
-      textViewRecyclerViewEmpty.setVisibility(this.workMatesChatAdapter.getItemCount() == 0 ?
-              View.VISIBLE : View.GONE);
+        textViewRecyclerViewEmpty.setVisibility(this.workMatesChatAdapter.getItemCount() == 0 ?
+                View.VISIBLE : View.GONE);
     }
 
 

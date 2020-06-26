@@ -12,7 +12,7 @@ public class ChatHelper {
     that will enable us to create a reference of the root Collection "chats".*/
 
     //-----COLLECTION REFERENCE----
-    public static CollectionReference getChatCollection(){
+    public static CollectionReference getChatCollection() {
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 }

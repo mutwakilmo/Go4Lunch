@@ -54,39 +54,39 @@ public class OnBoardingActivity extends AppCompatActivity {
         addDots(0);
         viewPager.addOnPageChangeListener(changeListener);
         //remove status bar
-       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
     }
 
 
-    public void skip(View view){
+    public void skip(View view) {
         startActivity(new Intent(this, MainActivity.class));
 
     }
 
-    public void started(View view){
+    public void started(View view) {
         startActivity(new Intent(this, MainActivity.class));
     }
 
 
-    public void next(View view){
-        viewPager.setCurrentItem(currentPosition+1);
+    public void next(View view) {
+        viewPager.setCurrentItem(currentPosition + 1);
         finish();
 
     }
 
-    private void addDots(int position){
+    private void addDots(int position) {
         dotsL = new TextView[4];
         dots.removeAllViews();
 
-        for (int i= 0 ; i <dotsL.length; i++){
+        for (int i = 0; i < dotsL.length; i++) {
             dotsL[i] = new TextView(this);
             dotsL[i].setText(Html.fromHtml("&#8226"));
             dotsL[i].setTextSize(35);
             dots.addView(dotsL[i]);
         }
 
-        if (dotsL.length > 0){
+        if (dotsL.length > 0) {
             dotsL[position].setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         }
     }
@@ -101,20 +101,20 @@ public class OnBoardingActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-           addDots(position);
-           currentPosition = position;
+            addDots(position);
+            currentPosition = position;
 
-           if (position == 0){
-               getStartedBtn.setVisibility(View.INVISIBLE);
-           } else if (position == 1){
-               getStartedBtn.setVisibility(View.INVISIBLE);
-           } else if (position == 2){
-               getStartedBtn.setVisibility(View.INVISIBLE);
-           } else {
-               animation = AnimationUtils.loadAnimation(OnBoardingActivity.this, R.anim.side_anim);
-               getStartedBtn.setAnimation(animation);
-               getStartedBtn.setVisibility(View.VISIBLE);
-           }
+            if (position == 0) {
+                getStartedBtn.setVisibility(View.INVISIBLE);
+            } else if (position == 1) {
+                getStartedBtn.setVisibility(View.INVISIBLE);
+            } else if (position == 2) {
+                getStartedBtn.setVisibility(View.INVISIBLE);
+            } else {
+                animation = AnimationUtils.loadAnimation(OnBoardingActivity.this, R.anim.side_anim);
+                getStartedBtn.setAnimation(animation);
+                getStartedBtn.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override

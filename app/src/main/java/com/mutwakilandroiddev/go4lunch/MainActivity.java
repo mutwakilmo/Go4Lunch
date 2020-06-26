@@ -55,8 +55,8 @@ public class MainActivity extends BaseActivity {
     // --------------------
     // REST REQUEST
     // --------------------
-    private void createUserInFirestore(){
-        if (this.getCurrentUser() != null){
+    private void createUserInFirestore() {
+        if (this.getCurrentUser() != null) {
             String urlPicture = (this.getCurrentUser().getPhotoUrl() != null) ?
                     this.getCurrentUser().getPhotoUrl().toString() : null;
             String uid = this.getCurrentUser().getUid();
@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity {
         Snackbar.make(coordinatorLayout, message, Snackbar.LENGTH_SHORT).show();
     }
 
-    private void updateUIWhenResuming(){
+    private void updateUIWhenResuming() {
         this.buttonLogin.setText(this.isCurrentUserLogged() ?
                 getString(R.string.button_login_text_logged) : getString(R.string.button_login_text_not_logged));
     }

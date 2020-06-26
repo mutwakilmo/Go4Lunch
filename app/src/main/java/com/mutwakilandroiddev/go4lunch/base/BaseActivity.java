@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.facebook.FacebookSdk;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(this.getFragmentLayout());
         ButterKnife.bind(this); //Configure Butterknife
+
     }
 
     public abstract int getFragmentLayout();
@@ -35,7 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     // UI
     // --------------------
 
-    protected void configureToolbar(){
+    protected void configureToolbar() {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
     }
@@ -44,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     // ERROR HANDLER
     // --------------------
 
-    protected OnFailureListener onFailureListener(){
+    protected OnFailureListener onFailureListener() {
         return new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -58,7 +60,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     // --------------------
 
     @Nullable
-    protected FirebaseUser getCurrentUser(){ return FirebaseAuth.getInstance().getCurrentUser(); }
+    protected FirebaseUser getCurrentUser() {
+        return FirebaseAuth.getInstance().getCurrentUser();
+    }
 
-    protected Boolean isCurrentUserLogged(){ return (this.getCurrentUser() != null); }
+    protected Boolean isCurrentUserLogged() {
+        return (this.getCurrentUser() != null);
+    }
 }

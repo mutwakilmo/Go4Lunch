@@ -94,6 +94,6 @@ public class SliderAdapter extends PagerAdapter {
     //Destroy
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((ConstraintLayout)object);
+        container.removeView((ConstraintLayout) object);
     }
 }
