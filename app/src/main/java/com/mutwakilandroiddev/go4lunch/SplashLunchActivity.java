@@ -3,22 +3,19 @@ package com.mutwakilandroiddev.go4lunch;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
+
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Base64;
+
 import android.util.Log;
 import android.view.animation.Animation;
 
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,7 +42,14 @@ public class SplashLunchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_lunch);
         ButterKnife.bind(this);
         Log.d(LOG_TAG_SPLASH, "onCreate: splash screen");
-        try {
+        //Animation Hooks
+        sideAnim = AnimationUtils.loadAnimation(this,R.anim.side_anim);
+        bottomAnim = AnimationUtils.loadAnimation(this,R.anim.bottom_anim);
+
+        //Set Animation
+        backgroundImage.setAnimation(sideAnim);
+        //Generate Hash-key for facebook sdk
+     /*   try {
             PackageInfo info = getPackageManager().getPackageInfo(
                     getPackageName(),
                     PackageManager.GET_SIGNATURES);
@@ -58,7 +62,7 @@ public class SplashLunchActivity extends AppCompatActivity {
 
         } catch (NoSuchAlgorithmException e) {
 
-        }
+        }*/
 
 
         new Handler().postDelayed(new Runnable() {
@@ -69,7 +73,7 @@ public class SplashLunchActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = onBoardingScreen.edit();
                     editor.putBoolean("firstTime", false);
                     editor.commit();
-                    Intent intent = new Intent(getApplicationContext(), OnBoardingActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), OnBoardingLunchActivity.class);
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);

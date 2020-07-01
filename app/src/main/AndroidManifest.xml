@@ -18,42 +18,47 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".RestaurantDetailActivity"></activity>
+        <activity android:name=".WebActivity" />
         <activity android:name=".workmates_chat.ChatActivity" />
-        <activity android:name=".MainScreen" /> <!-- MainScreen ACTIVITY -->
         <activity
-            android:name=".OnBoardingActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" /> <!-- Splash ACTIVITY -->
+            android:name=".MainScreen"
+            android:theme="@style/AppTheme.NoTitle" />
         <activity
             android:name=".SplashLunchActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- Profile ACTIVITY -->
-        <activity
-            android:name=".ProfileActivity"
-            android:label="@string/toolbar_title_login_activity"
-            android:parentActivityName=".MainScreen"/> <!-- MAIN ACTIVITY -->
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoTitle"> <!-- DISABLE TOOLBAR IN MAIN ACTIVITY -->
-
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/toolbar_title_login_activity"
+            android:parentActivityName=".MainScreen"
+            android:theme="@style/AppTheme.NoTitle" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoTitle" />
+        <activity
+            android:name=".OnBoardingLunchActivity"
+            android:configChanges="orientation"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoTitle" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/mapapikey" />
     </application>
 
 </manifest>

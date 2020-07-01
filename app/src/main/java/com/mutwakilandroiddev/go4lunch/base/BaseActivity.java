@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.facebook.FacebookSdk;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +29,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.setContentView(this.getFragmentLayout());
         ButterKnife.bind(this); //Configure Butterknife
 
+
+
     }
 
     public abstract int getFragmentLayout();
@@ -38,8 +40,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     // --------------------
 
     protected void configureToolbar() {
-        ActionBar ab = getSupportActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
     }
 
     // --------------------

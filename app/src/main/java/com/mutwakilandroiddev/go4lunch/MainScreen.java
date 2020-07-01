@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,6 +25,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.mutwakilandroiddev.go4lunch.base.BaseActivity;
 import com.mutwakilandroiddev.go4lunch.workmates_chat.ChatActivity;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,8 +36,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
 
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -48,16 +50,27 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     // Class name for Log tag
     public static final String TAG_LOG_MAIN = MainScreen.class.getSimpleName();
 
+    //permission
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+    private static final int AUTOCOMPLETE_REQUEST_CODE = 111;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         this.configureNavigationView();
 
+        //set-up tool bar
+        setSupportActionBar(toolbar);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-
+        fm.beginTransaction().add(R.id.fragment_content, fragment3, "3").hide(fragment3).commit();
+        fm.beginTransaction().add(R.id.fragment_content, fragment2, "2").hide(fragment2).commit();
+        fm.beginTransaction().add(R.id.fragment_content, fragment1, "1").commit();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -88,27 +101,32 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
 
                     switch (item.getItemId()) {
                         case R.id.nav_map:
-                            selectedFragment = new MapFragment();
-                            break;
+                            fm.beginTransaction().hide(active).show(fragment1).commit();
+                            active = fragment1;
+                            return true;
 
                         case R.id.nav_list:
-                            selectedFragment = new ListFragment();
-                            break;
+                            fm.beginTransaction().hide(active).show(fragment2).commit();
+                            active = fragment2;
+                            return true;
 
                         case R.id.nav_workmates:
-                            selectedFragment = new WorkmatesFragment();
-                            break;
+                            fm.beginTransaction().hide(active).show(fragment3).commit();
+                            active = fragment3;
+                            return true;
 
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content,
-                            selectedFragment).commit();
-                    return true;
+                    return false;
                 }
             };
+
+
+    public void setActionBarTitle(String title) {
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
+    }
 
     // ----------------------------
     // CONFIGURATION ProfileActivity

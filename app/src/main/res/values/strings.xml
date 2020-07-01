@@ -94,36 +94,6 @@
     <string name="list_fragment_text">List</string>
     <string name="mates_fragment_text">Mates</string>
 
-    <!-- GOOGLE MAP -->
-    <string name="default_info_title">title</string>
-    <string name="default_info_snippet">snippet</string>
-    <string name="map_error_connexion">It seems you have no connection availability</string>
-    <string name="location_button_error">An error occurred, please click on map view button</string>
-    <string name="toast_message_geolocation">Make sure your device got map geolocation activated</string>
-    <string name="no_restaurant_found">No restaurant found!</string>
-
-    <!-- RecyclerView restaurants item -->
-    <string name="opening_time">opening time</string>
-    <string name="distance" translatable="false">%1$sm</string>
-    <string name="nb_workmate_selection" translatable="false">(%1$s)</string>
-    <string name="workmate_icon" translatable="false">workmate_icon</string>
-    <string name="restaurant_type_address" translatable="false">%1$s - %2$s</string>
-    <string name="restaurant_name">restaurant name</string>
-    <string name="restaurant_image">restaurant image</string>
-    <string name="no_restaurants_available_check_the_map_view">No restaurants available&#8230; check the map view</string>
-
-
-    <!--RecyclerView users item-->
-    <string name="workmate_default_decision"> %1$s hasn\'t decided yet</string>
-    <string name="workmate_profil">workmates_profil</string>
-    <string name="workmate_is_eating">%1$s is eating in (%2$s)</string>
-    <string name="workmate_is_joining">%1$s is joining</string>
-    <string name="no_workmate_available">No workmate available</string>
-
-
-
-    <string name="downloading">Downloading&#8230;</string>
-
 
     <!-- SETTINGS -->
     <string name="manifest_settings">Settings</string>
@@ -135,30 +105,47 @@
     <string name="info_no_user_name_found">No user name found</string>
     <string name="popup_title">Delete account?</string>
 
-    <!-- Restaurant information -->
-    <string name="call">CALL</string>
-    <string name="like" translatable="false">LIKE</string>
-    <string name="website">WEBSITE</string>
-    <string name="phone_no_available">No phone number available</string>
-    <string name="website_no_available">Website no available</string>
-    <string name="manifest_restaurant_info">Restaurant information</string>
-
-    <!-- NOTIFICATION -->
-    <string name="text_notification">%1$s! It\'s time to lunch!</string>
-
-
-    <!-- FIREBASE -->
-    <string name="save_place_selection">Choice saved</string>
-    <string name="delete_place_selection">Choice canceled</string>
-    <string name="restaurant_selection_availability">You haven\'t a restaurant selected today!</string>
-    <string name="restaurant_like">Like</string>
-    <string name="restaurant_no_like">Dislike</string>
-    <string name="notification_enable">Notification enabled!</string>
-    <string name="notification_disable">Notification disabled!</string>
-
 
     <!-- FACEBOOK PURPOSE -->
     <string name="facebook_application_id" translatable="false">691887181604550</string>
     <string name="facebook_login_protocol_scheme" translatable="false" tools:ignore="UnusedResources">fb691887181604550</string>
+
+    <string name="toolbar_title">I\'m Hungry!</string>
+    <string name="gps_location">relocate  to your current location</string>
+    <string name="workmates">Available workmates</string>
+    <string name="photo_profile">workmate profile image</string>
+    <!--WORKMATES -->
+    <string name="not_decided_ex">"Gaspard has not decided yet."</string>
+    <string name="not_decided">" has not decided yet."</string>
+    <string name="decided">" eat at the restaurant:"</string>
+
+    <!--restaurant -->
+    <string name="no_openinghours">"Schedules are not available."</string>
+    <string name="isjoining">" is joining!"</string>
+    <string name="no_hours">"Schedules are not available."</string>
+    <string name="open_at">"Open at "</string>
+    <string name="open_until">"Open until "</string>
+    <string name="closed">Closed</string>
+    <string name="closed_today">"Closed today"</string>
+    <string name="always_open">"Open 24/7"</string>
+    <string name="restaurant_name">"Name of restaurant"</string>
+    <string name="restaurant_address">"Address of restaurant"</string>
+    <string name="restaurant_open">"Open hours of restaurant"</string>
+    <string name="restaurant_distance">"Distance"</string>
+    <string name="logo_colleagues">"logo number of colleagues"</string>
+    <string name="restaurant_number_colleagues">"number of colleagues"</string>
+    <string name="restaurant_star">"star"</string>
+    <string name="restaurant_photo">"photo"</string>
+    <!--DETAIL -->
+    <string name="call">"Call"</string>
+    <string name="website">"Website"</string>
+    <string name="like">"Like"</string>
+
+    <!-- PHONE CALL -->
+    <string name="no_phone_number">"Phone number is not available"</string>
+    <string name="no_permission_for_call">"Go4Lunch does not have permission to make calls"</string>
+
+    <!-- WEBSITE -->
+    <string name="no_website">"The website address is not available"</string>
 
 </resources>

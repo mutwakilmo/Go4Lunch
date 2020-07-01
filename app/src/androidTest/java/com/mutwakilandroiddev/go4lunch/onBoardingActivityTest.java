@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.allOf;
 public class onBoardingActivityTest {
 
     @Rule
-    public ActivityTestRule<OnBoardingActivity> mActivityTestRule = new ActivityTestRule<>(OnBoardingActivity.class);
+    public ActivityTestRule<OnBoardingLunchActivity> mActivityTestRule = new ActivityTestRule<>(OnBoardingLunchActivity.class);
 
     @Test
     public void onBoardingActivityTest() {

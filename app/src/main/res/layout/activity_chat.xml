@@ -52,7 +52,6 @@
             android:layout_height="50dip"
             android:layout_weight="1"
             android:background="@color/colorSand"
-            android:src="@drawable/ic_bug_report_white_24dp"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:tag="30"/>
 
