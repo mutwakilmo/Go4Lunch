@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Restaurant {
     private String restaurantName;
-    private String dateCreated;
+    private Date dateCreated;
     private String address;
     private List<String> clientTodayList;
 
@@ -41,7 +41,7 @@ public class Restaurant {
         this.restaurantName = restaurantName;
     }
 
-    public void setDateCreated(String dateCreated) {
+    public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
 

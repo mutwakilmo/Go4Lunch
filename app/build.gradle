@@ -16,11 +16,17 @@ android {
     }
 
     buildTypes {
+
         release {
             minifyEnabled false
             multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
         }
+    }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'API_KEY', MAP_API_KEY
     }
 
 

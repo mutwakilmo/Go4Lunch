@@ -3,6 +3,7 @@ package com.mutwakilandroiddev.go4lunch;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -25,6 +26,10 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -78,7 +83,8 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
 
     private List<GooglePlacesResult> results;
-
+    private int radius;
+    private String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +104,8 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        Places.initialize(getApplicationContext(), BuildConfig.apikey);
+        Places.initialize(getApplicationContext(), BuildConfig.API_KEY);
+        getLocationPermission();
     }
 
     public void setActionBarTitle(String title) {
@@ -122,9 +129,9 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
 
     private void searchNearbyRestaurants(double mylat, double mylng){
-
+        Log.d(TAG_LOG_MAIN, "searchNearbyRestaurants: ");
         String keyword = "";
-        String key = BuildConfig.apikey;
+        String key = BuildConfig.API_KEY;
         //String lat = String.valueOf(currentLocation.getLatitude());
         //String lng = String.valueOf(currentLocation.getLongitude());
         String lat = String.valueOf(mylat);
@@ -152,6 +159,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
             @Override
             public void onFailure(@NonNull Call<NearbyPlacesList> call, @NonNull Throwable t) {
+                Log.d(TAG_LOG_MAIN, "onFailure: ");
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -162,13 +170,65 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
     private void getLocationPermission(){
         FusedLocationProviderClient mFusedLocationProviderClient;
-        //getting location permission
+        //getLocationPermission: getting location permissions
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
         if (ContextCompat.checkSelfPermission(this, FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionGranted = true;
 
+                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+                Task location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()) {
+                            // onComplete: found location
+                            currentLocation = (Location) task.getResult();
+                            // We pass the user's position to the fragment map
+                            assert currentLocation != null;
 
+                            fragment1.setUserLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                            fragment2.setUserLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                            searchNearbyRestaurants(currentLocation.getLatitude(), currentLocation.getLongitude());
+                        }
+                    }
+                });
+
+            } else {
+                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        }else {
+            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
+
+
+    //permission result
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // onRequestPermissionsResult: called
+        mLocationPermissionGranted = false;
+        Log.d(TAG_LOG_MAIN, "onRequestPermissionsResult: ");
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int grantResult : grantResults) {
+                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                            // onRequestPermissionsResult: permissions failed
+                            return;
+                        } else {
+                            // onRequestPermissionsResult: Permissions granted
+                            mLocationPermissionGranted = true;
+                            getLocationPermission();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     // --------------------
     // BottomNavigationView
     // --------------------
@@ -193,7 +253,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                         case R.id.nav_workmates:
                             fm.beginTransaction().hide(active).show(fragment3).commit();
                             active = fragment3;
-                            getSupportActionBar().setTitle(R.string.toolbar_title);
+                            getSupportActionBar().setTitle(R.string.workmates);
                             return true;
 
                     }
@@ -284,8 +344,6 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
             default:
                 return false;
         }
-
-
 
 
     }
