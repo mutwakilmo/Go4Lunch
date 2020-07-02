@@ -149,6 +149,7 @@
 
     <!-- WEBSITE -->
     <string name="no_website">"The website address is not available"</string>
-
+    <string name="no_lunch">"You have not chosen a restaurant yet!"</string>
+    <string name="error">"An error has occurred"</string>
 
 </resources>

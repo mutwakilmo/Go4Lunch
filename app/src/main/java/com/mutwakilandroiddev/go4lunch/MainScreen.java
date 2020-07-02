@@ -11,12 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,9 +34,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.api.Context;
 import com.mutwakilandroiddev.go4lunch.api.ApiClient;
 import com.mutwakilandroiddev.go4lunch.api.ApiInterface;
 import com.mutwakilandroiddev.go4lunch.base.BaseActivity;
@@ -41,6 +49,7 @@ import com.mutwakilandroiddev.go4lunch.models.nearby.GooglePlacesResult;
 import com.mutwakilandroiddev.go4lunch.models.nearby.NearbyPlacesList;
 import com.mutwakilandroiddev.go4lunch.workmates_chat.ChatActivity;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -75,16 +84,20 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private static final int AUTOCOMPLETE_REQUEST_CODE = 111;
-
+    private Context mContext;
     private boolean mLocationPermissionGranted = false;
     private Location currentLocation;
     private double societyLat = 49.14;
     private double societyLng = 2.53;
-
-
+    private String PLACEIDRESTO = "resto_place_id";
+    private int click = 0;
     private List<GooglePlacesResult> results;
     private int radius;
     private String type;
+    public static final String SHARED_PREFS = "SharedPrefsPerso";
+    public static final String RADIUS_PREFS = "radiusForSearch";
+    public static final String TYPE_PREFS = "typeOfSearch";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +112,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         fm.beginTransaction().add(R.id.fragment_content, fragment3, "3").hide(fragment3).commit();
         fm.beginTransaction().add(R.id.fragment_content, fragment2, "2").hide(fragment2).commit();
         fm.beginTransaction().add(R.id.fragment_content, fragment1, "1").commit();
+        mContext = this;
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -106,10 +120,91 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         toggle.syncState();
         Places.initialize(getApplicationContext(), BuildConfig.API_KEY);
         getLocationPermission();
+        loadPrefs();
     }
 
+    private void loadPrefs() {
+        Log.d(TAG_LOG_MAIN, "loadPrefs: ");
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
+        String radiusString = sharedPreferences.getString(RADIUS_PREFS, "500");
+        if (radiusString != null) {
+            radius  = Integer.parseInt(radiusString);
+        }
+        type = sharedPreferences.getString(TYPE_PREFS, "restaurant");
+    }
+    // Autocomplete button not for workmates fragment
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (click ==3) {
+            menu.removeItem(R.id.menu_activity_main_search);
+        } else {
+            if (menu.findItem(R.id.menu_activity_main_search) == null) {
+                menu.add(Menu.NONE, R.id.menu_activity_main_search, 5, "Autocomplete");
+            }
+        }
+        return true;
+    }
+
+    //tool-bar title
     public void setActionBarTitle(String title) {
         Objects.requireNonNull(getSupportActionBar()).setTitle(title);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //inflate the tool bar
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return true;
+    }
+
+    //configure the click of the tool bar
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_activity_main_search:
+
+                // Set the fields to specify which types of place data to
+                // return after the user has made a selection.
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+
+                // Define the region
+                RectangularBounds bounds = RectangularBounds.newInstance(
+                        new LatLng(currentLocation.getLatitude()-0.01, currentLocation.getLongitude()-0.01),
+                        new LatLng(currentLocation.getLatitude()+0.01, currentLocation.getLongitude()+0.01));
+
+                // Start the autocomplete intent.
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.OVERLAY, fields)
+                        .setLocationBias(bounds)
+                        .setTypeFilter(TypeFilter.ESTABLISHMENT)
+                        .build(this);
+
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // Get back the result of the placeAutocomplete and open the DetailRestaurantActivity for the user's choice
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                Intent intent = new Intent(this, RestaurantDetailActivity.class);
+                intent.putExtra(PLACEIDRESTO, place.getId());
+                startActivity(intent);
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.error), Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.error), Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
@@ -128,7 +223,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
 
-    private void searchNearbyRestaurants(double mylat, double mylng){
+    private void searchNearbyRestaurants(double mylat, double mylng) {
         Log.d(TAG_LOG_MAIN, "searchNearbyRestaurants: ");
         String keyword = "";
         String key = BuildConfig.API_KEY;
@@ -137,7 +232,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         String lat = String.valueOf(mylat);
         String lng = String.valueOf(mylng);
 
-        String location = lat+","+lng;
+        String location = lat + "," + lng;
 
         Call<NearbyPlacesList> call;
         ApiInterface googleMapService = ApiClient.getClient().create(ApiInterface.class);
@@ -148,8 +243,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         results = response.body().getResults();
-                        fragment1.updateNearbyPlaces(results);
-                        fragment2.updateNearbyPlaces(results);
+                       // fragment2.updateNearbyPlaces(results);
                     }
 
                 } else {
@@ -168,7 +262,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     // CONFIGURATION permissions
     // ----------------------------
 
-    private void getLocationPermission(){
+    private void getLocationPermission() {
         FusedLocationProviderClient mFusedLocationProviderClient;
         //getLocationPermission: getting location permissions
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -188,8 +282,8 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                             // We pass the user's position to the fragment map
                             assert currentLocation != null;
 
-                            fragment1.setUserLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
-                            fragment2.setUserLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                           // fragment1.setUserLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                       //     fragment2.setUserLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
                             searchNearbyRestaurants(currentLocation.getLatitude(), currentLocation.getLongitude());
                         }
                     }
@@ -198,7 +292,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
             } else {
                 ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
             }
-        }else {
+        } else {
             ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
@@ -242,25 +336,27 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                             fm.beginTransaction().hide(active).show(fragment1).commit();
                             active = fragment1;
                             getSupportActionBar().setTitle(R.string.toolbar_title);
+                            click =1;
                             return true;
 
                         case R.id.nav_list:
                             fm.beginTransaction().hide(active).show(fragment2).commit();
                             active = fragment2;
                             getSupportActionBar().setTitle(R.string.toolbar_title);
+                            click =2;
                             return true;
 
                         case R.id.nav_workmates:
                             fm.beginTransaction().hide(active).show(fragment3).commit();
                             active = fragment3;
                             getSupportActionBar().setTitle(R.string.workmates);
+                            click =3;
                             return true;
 
                     }
                     return false;
                 }
             };
-
 
 
     // ----------------------------

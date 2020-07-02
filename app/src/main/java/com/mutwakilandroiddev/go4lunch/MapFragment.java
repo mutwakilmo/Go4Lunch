@@ -44,16 +44,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
     private GoogleMap googleMap;
 
 
-    private View view;
+    private View mView;
 
     public MapFragment() {
         //Required empty constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_map, container, false);
+        View mView = inflater.inflate(R.layout.fragment_map, container, false);
 
         LunchDateFormat lunchDateFormat = new LunchDateFormat();
         today = lunchDateFormat.getTodayDate();
@@ -62,7 +67,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         myLatitude = 48.858511;
         myLongitude = 2.294524;
 
-        return view;
+        return mView;
     }
 
 
@@ -97,7 +102,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
     //--------------------------------------------------
     private void initMap() {
         MapView mMapView;
-        mMapView = view.findViewById(R.id.map);
+        mMapView = mView.findViewById(R.id.map);
 
         if (mMapView != null) {
             mMapView.onCreate(null);
