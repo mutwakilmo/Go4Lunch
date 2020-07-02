@@ -3,6 +3,7 @@ package com.mutwakilandroiddev.go4lunch;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,8 @@ import androidx.fragment.app.FragmentManager;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,18 +20,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.libraries.places.api.Places;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.api.Context;
+import com.mutwakilandroiddev.go4lunch.api.ApiClient;
+import com.mutwakilandroiddev.go4lunch.api.ApiInterface;
 import com.mutwakilandroiddev.go4lunch.base.BaseActivity;
+import com.mutwakilandroiddev.go4lunch.models.nearby.GooglePlacesResult;
+import com.mutwakilandroiddev.go4lunch.models.nearby.NearbyPlacesList;
 import com.mutwakilandroiddev.go4lunch.workmates_chat.ChatActivity;
 
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainScreen extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.nav_view)
@@ -56,6 +71,13 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private static final int AUTOCOMPLETE_REQUEST_CODE = 111;
 
+    private boolean mLocationPermissionGranted = false;
+    private Location currentLocation;
+    private double societyLat = 49.14;
+    private double societyLng = 2.53;
+
+
+    private List<GooglePlacesResult> results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +98,11 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        Places.initialize(getApplicationContext(), BuildConfig.apikey);
+    }
+
+    public void setActionBarTitle(String title) {
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
     }
 
     @Override
@@ -94,6 +121,54 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
     }
 
 
+    private void searchNearbyRestaurants(double mylat, double mylng){
+
+        String keyword = "";
+        String key = BuildConfig.apikey;
+        //String lat = String.valueOf(currentLocation.getLatitude());
+        //String lng = String.valueOf(currentLocation.getLongitude());
+        String lat = String.valueOf(mylat);
+        String lng = String.valueOf(mylng);
+
+        String location = lat+","+lng;
+
+        Call<NearbyPlacesList> call;
+        ApiInterface googleMapService = ApiClient.getClient().create(ApiInterface.class);
+        call = googleMapService.getNearBy(location, radius, type, keyword, key);
+        call.enqueue(new Callback<NearbyPlacesList>() {
+            @Override
+            public void onResponse(@NonNull Call<NearbyPlacesList> call, @NonNull Response<NearbyPlacesList> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        results = response.body().getResults();
+                        fragment1.updateNearbyPlaces(results);
+                        fragment2.updateNearbyPlaces(results);
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NearbyPlacesList> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+    // ----------------------------
+    // CONFIGURATION permissions
+    // ----------------------------
+
+    private void getLocationPermission(){
+        FusedLocationProviderClient mFusedLocationProviderClient;
+        //getting location permission
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (ContextCompat.checkSelfPermission(this, FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
+
+        }
+    }
     // --------------------
     // BottomNavigationView
     // --------------------
@@ -106,16 +181,19 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                         case R.id.nav_map:
                             fm.beginTransaction().hide(active).show(fragment1).commit();
                             active = fragment1;
+                            getSupportActionBar().setTitle(R.string.toolbar_title);
                             return true;
 
                         case R.id.nav_list:
                             fm.beginTransaction().hide(active).show(fragment2).commit();
                             active = fragment2;
+                            getSupportActionBar().setTitle(R.string.toolbar_title);
                             return true;
 
                         case R.id.nav_workmates:
                             fm.beginTransaction().hide(active).show(fragment3).commit();
                             active = fragment3;
+                            getSupportActionBar().setTitle(R.string.toolbar_title);
                             return true;
 
                     }
@@ -124,9 +202,6 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
             };
 
 
-    public void setActionBarTitle(String title) {
-        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
-    }
 
     // ----------------------------
     // CONFIGURATION ProfileActivity
@@ -209,6 +284,10 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
             default:
                 return false;
         }
+
+
+
+
     }
 }
 

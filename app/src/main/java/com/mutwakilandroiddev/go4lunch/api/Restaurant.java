@@ -1,6 +1,7 @@
 package com.mutwakilandroiddev.go4lunch.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Restaurant {
@@ -22,7 +23,7 @@ public class Restaurant {
         return restaurantName;
     }
 
-    public String getDateCreated() {
+    public Date getDateCreated() {
         return dateCreated;
     }
 
