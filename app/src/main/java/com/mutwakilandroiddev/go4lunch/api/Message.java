@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch.models;
+package com.mutwakilandroiddev.go4lunch.api;
 
 import com.google.firebase.firestore.ServerTimestamp;
 

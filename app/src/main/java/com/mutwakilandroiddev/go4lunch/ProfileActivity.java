@@ -18,11 +18,9 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.mutwakilandroiddev.go4lunch.R;
-import com.mutwakilandroiddev.go4lunch.SplashLunchActivity;
 import com.mutwakilandroiddev.go4lunch.api.UserHelper;
 import com.mutwakilandroiddev.go4lunch.base.BaseActivity;
-import com.mutwakilandroiddev.go4lunch.models.User;
+import com.mutwakilandroiddev.go4lunch.api.User;
 
 import butterknife.BindView;
 import butterknife.OnClick;

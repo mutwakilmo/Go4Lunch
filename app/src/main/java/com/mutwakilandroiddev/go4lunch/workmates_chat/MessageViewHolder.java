@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.mutwakilandroiddev.go4lunch.R;
-import com.mutwakilandroiddev.go4lunch.models.Message;
+import com.mutwakilandroiddev.go4lunch.api.Message;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

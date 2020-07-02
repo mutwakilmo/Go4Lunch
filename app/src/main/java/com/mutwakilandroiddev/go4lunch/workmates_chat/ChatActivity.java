@@ -6,13 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,8 +28,8 @@ import com.mutwakilandroiddev.go4lunch.R;
 import com.mutwakilandroiddev.go4lunch.api.MessageHelper;
 import com.mutwakilandroiddev.go4lunch.api.UserHelper;
 import com.mutwakilandroiddev.go4lunch.base.BaseActivity;
-import com.mutwakilandroiddev.go4lunch.models.Message;
-import com.mutwakilandroiddev.go4lunch.models.User;
+import com.mutwakilandroiddev.go4lunch.api.Message;
+import com.mutwakilandroiddev.go4lunch.api.User;
 
 import java.util.UUID;
 

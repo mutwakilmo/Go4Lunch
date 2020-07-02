@@ -9,7 +9,7 @@ import com.bumptech.glide.RequestManager;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.mutwakilandroiddev.go4lunch.R;
-import com.mutwakilandroiddev.go4lunch.models.Message;
+import com.mutwakilandroiddev.go4lunch.api.Message;
 
 public class WorkMatesChatAdapter extends FirestoreRecyclerAdapter<Message, MessageViewHolder> {
 
