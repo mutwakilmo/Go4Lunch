@@ -60,10 +60,6 @@ import retrofit2.Response;
 public class LunchActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView nameTextView;
-    private TextView emailTextView;
-    private ImageView photoImageView;
-
     final MapFragment fragment1 = new MapFragment();
     final ListFragment fragment2 = new ListFragment();
     final WorkmatesFragment fragment3 = new WorkmatesFragment();
@@ -73,7 +69,7 @@ public class LunchActivity extends BaseActivity
 
     private String PLACE_ID_RESTAURANT = "restaurant_place_id";
 
-    public static final String SHARED_PREFS = "SharedPrefsPerso";
+    public static final String SHARED_PREFS = "SharedPrefs";
     public static final String RADIUS_PREFS = "radiusForSearch";
     public static final String TYPE_PREFS = "typeOfSearch";
 
