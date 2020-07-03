@@ -25,7 +25,7 @@ public class ListFragment extends Fragment implements DisplayNearByPlaces {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
-        ((MainScreen) Objects.requireNonNull(getActivity())).setActionBarTitle(getResources().getString(R.string.toolbar_title));
+        ((LunchActivity) Objects.requireNonNull(getActivity())).setActionBarTitle(getResources().getString(R.string.toolbar_title));
         return view;
     }
 

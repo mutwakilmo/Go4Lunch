@@ -81,7 +81,7 @@ public class MainActivity extends BaseActivity {
 
     //Launching
     private void mainScreenActivity() {
-        Intent intent = new Intent(this, MainScreen.class);
+        Intent intent = new Intent(this, LunchActivity.class);
         startActivity(intent);
     }
 

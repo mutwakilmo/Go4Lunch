@@ -18,12 +18,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".LunchActivity"
+            android:theme="@style/AppTheme.NoTitle"></activity>
         <activity android:name=".RestaurantDetailActivity" />
         <activity android:name=".WebActivity" />
-        <activity android:name=".workmates_chat.ChatActivity" />
-        <activity
-            android:name=".MainScreen"
-            android:theme="@style/AppTheme.NoTitle" />
+        <activity android:name=".workmates_chat.ChatActivity"
+            android:parentActivityName=".LunchActivity"/>
         <activity
             android:name=".SplashLunchActivity"
             android:configChanges="orientation"
@@ -31,15 +31,13 @@
             android:theme="@style/AppTheme.NoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ProfileActivity"
             android:label="@string/toolbar_title_login_activity"
-            android:parentActivityName=".MainScreen"
-            android:theme="@style/AppTheme.NoTitle" />
+            android:parentActivityName=".LunchActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoTitle" />

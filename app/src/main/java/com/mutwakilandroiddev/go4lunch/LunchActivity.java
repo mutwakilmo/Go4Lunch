@@ -53,116 +53,144 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainScreen extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.nav_view)
-    NavigationView navigationView;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawer;
+public class LunchActivity extends BaseActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
+    private TextView nameTextView;
+    private TextView emailTextView;
+    private ImageView photoImageView;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    final MapFragment fragment1 = new MapFragment();
+    final ListFragment fragment2 = new ListFragment();
+    final WorkmatesFragment fragment3 = new WorkmatesFragment();
 
-    //Fragment
-    final Fragment fragment1 = new MapFragment();
-    final Fragment fragment2 = new ListFragment();
-    final Fragment fragment3 = new WorkmatesFragment();
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;
 
-    // Class name for Log tag
-    public static final String TAG_LOG_MAIN = MainScreen.class.getSimpleName();
+    private String PLACE_ID_RESTAURANT = "restaurant_place_id";
 
-    //permission
-    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
-    private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
-    private static final int AUTOCOMPLETE_REQUEST_CODE = 111;
-    private Context mContext;
-    private boolean mLocationPermissionGranted = false;
-    private Location currentLocation;
-    private double societyLat = 49.14;
-    private double societyLng = 2.53;
-    private String PLACEIDRESTO = "resto_place_id";
-    private int click = 0;
-    private List<GooglePlacesResult> results;
-    private int radius;
-    private String type;
     public static final String SHARED_PREFS = "SharedPrefsPerso";
     public static final String RADIUS_PREFS = "radiusForSearch";
     public static final String TYPE_PREFS = "typeOfSearch";
 
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+    private static final int AUTOCOMPLETE_REQUEST_CODE = 100;
+
+    private static final String TAG = "LunchActivity";
+
+    public Location getCurrentLocation() {
+        return currentLocation;
+    }
+
+    private Location currentLocation;
+
+
+    private NavigationView navigationView;
+    private List<GooglePlacesResult> results;
+    private Context mContext;
+    private int nav_click = 0;
+
+
+    private boolean mLocationPermissionGranted = false;
+
+    private int radius;
+    private String type;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
-        this.configureNavigationView();
 
-        //set-up tool bar
+        setContentView(R.layout.activity_lunch);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
-        fm.beginTransaction().add(R.id.fragment_content, fragment3, "3").hide(fragment3).commit();
-        fm.beginTransaction().add(R.id.fragment_content, fragment2, "2").hide(fragment2).commit();
-        fm.beginTransaction().add(R.id.fragment_content, fragment1, "1").commit();
-        mContext = this;
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        fm.beginTransaction().add(R.id.lunch_container, fragment3, "3").hide(fragment3).commit();
+        fm.beginTransaction().add(R.id.lunch_container, fragment2, "2").hide(fragment2).commit();
+        fm.beginTransaction().add(R.id.lunch_container, fragment1, "1").commit();
+        configureNavigationView();
+
         Places.initialize(getApplicationContext(), BuildConfig.API_KEY);
+
+        setRadiusPrefs();
         getLocationPermission();
-        loadPrefs();
     }
 
-    private void loadPrefs() {
-        Log.d(TAG_LOG_MAIN, "loadPrefs: ");
+    public void setActionBarTitle(String bibi) {
+        Objects.requireNonNull(getSupportActionBar()).setTitle(bibi);
+    }
+
+    private void setRadiusPrefs() {
+        Log.d(TAG, "loadPrefs: ");
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
         String radiusString = sharedPreferences.getString(RADIUS_PREFS, "500");
         if (radiusString != null) {
-            radius  = Integer.parseInt(radiusString);
+            radius = Integer.parseInt(radiusString);
         }
         type = sharedPreferences.getString(TYPE_PREFS, "restaurant");
     }
-    // Autocomplete button not for workmates fragment
+
+
+    @Override
+    public int getFragmentLayout() {
+        return R.layout.activity_lunch;
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    // ------------------------------------------------
+    //Autocomplete display not for workmates fragment
+    // -----------------------------------------------
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (click ==3) {
+        if (nav_click == 3) {
             menu.removeItem(R.id.menu_activity_main_search);
         } else {
             if (menu.findItem(R.id.menu_activity_main_search) == null) {
-                menu.add(Menu.NONE, R.id.menu_activity_main_search, 5, "Autocomplete");
+                menu.add(Menu.NONE, R.id.menu_activity_main_search, 2, "Autocomplete");
             }
         }
         return true;
     }
 
-    //tool-bar title
-    public void setActionBarTitle(String title) {
-        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //inflate the tool bar
+        // Inflate the toolbar menu
         getMenuInflater().inflate(R.menu.toolbar, menu);
         return true;
     }
 
-    //configure the click of the tool bar
-
+    // Configure the click on each item of the toolbar
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_activity_main_search:
 
                 // Set the fields to specify which types of place data to
@@ -171,8 +199,8 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
 
                 // Define the region
                 RectangularBounds bounds = RectangularBounds.newInstance(
-                        new LatLng(currentLocation.getLatitude()-0.01, currentLocation.getLongitude()-0.01),
-                        new LatLng(currentLocation.getLatitude()+0.01, currentLocation.getLongitude()+0.01));
+                        new LatLng(currentLocation.getLatitude() - 0.01, currentLocation.getLongitude() - 0.01),
+                        new LatLng(currentLocation.getLatitude() + 0.01, currentLocation.getLongitude() + 0.01));
 
                 // Start the autocomplete intent.
                 Intent intent = new Autocomplete.IntentBuilder(
@@ -188,8 +216,12 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
                 return super.onOptionsItemSelected(item);
         }
     }
+    // ------------------------------------------------------------
+    // CONFIGURATION Get back the result of the
+    // placeAutocomplete and open the DetailRestaurantActivity
+    // for the user's choice
+    // ------------------------------------------------------------
 
-    // Get back the result of the placeAutocomplete and open the DetailRestaurantActivity for the user's choice
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -197,7 +229,7 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 Intent intent = new Intent(this, RestaurantDetailActivity.class);
-                intent.putExtra(PLACEIDRESTO, place.getId());
+                intent.putExtra(PLACE_ID_RESTAURANT, place.getId());
                 startActivity(intent);
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 Toast.makeText(getApplicationContext(), getResources().getString(R.string.error), Toast.LENGTH_LONG).show();
@@ -207,183 +239,34 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         }
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public int getFragmentLayout() {
-        return R.layout.activity_main_screen;
-    }
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
 
+        if (id == R.id.nav_mylunch) {
+            //startDetailActivity();
+            //Todo 2 start restaurant detail activity
 
-    @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+        } else if (id == R.id.nav_settings) {
+            openProfileActivity();
 
-
-    private void searchNearbyRestaurants(double mylat, double mylng) {
-        Log.d(TAG_LOG_MAIN, "searchNearbyRestaurants: ");
-        String keyword = "";
-        String key = BuildConfig.API_KEY;
-        //String lat = String.valueOf(currentLocation.getLatitude());
-        //String lng = String.valueOf(currentLocation.getLongitude());
-        String lat = String.valueOf(mylat);
-        String lng = String.valueOf(mylng);
-
-        String location = lat + "," + lng;
-
-        Call<NearbyPlacesList> call;
-        ApiInterface googleMapService = ApiClient.getClient().create(ApiInterface.class);
-        call = googleMapService.getNearBy(location, radius, type, keyword, key);
-        call.enqueue(new Callback<NearbyPlacesList>() {
-            @Override
-            public void onResponse(@NonNull Call<NearbyPlacesList> call, @NonNull Response<NearbyPlacesList> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        results = response.body().getResults();
-                       // fragment2.updateNearbyPlaces(results);
-                    }
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<NearbyPlacesList> call, @NonNull Throwable t) {
-                Log.d(TAG_LOG_MAIN, "onFailure: ");
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-    // ----------------------------
-    // CONFIGURATION permissions
-    // ----------------------------
-
-    private void getLocationPermission() {
-        FusedLocationProviderClient mFusedLocationProviderClient;
-        //getLocationPermission: getting location permissions
-        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-
-        if (ContextCompat.checkSelfPermission(this, FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(this, COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                mLocationPermissionGranted = true;
-
-                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-                Task location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()) {
-                            // onComplete: found location
-                            currentLocation = (Location) task.getResult();
-                            // We pass the user's position to the fragment map
-                            assert currentLocation != null;
-
-                           // fragment1.setUserLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
-                       //     fragment2.setUserLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
-                            searchNearbyRestaurants(currentLocation.getLatitude(), currentLocation.getLongitude());
-                        }
-                    }
-                });
-
-            } else {
-                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
-            }
-        } else {
-            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
-        }
-    }
-
-
-    //permission result
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        // onRequestPermissionsResult: called
-        mLocationPermissionGranted = false;
-        Log.d(TAG_LOG_MAIN, "onRequestPermissionsResult: ");
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0) {
-                    for (int grantResult : grantResults) {
-                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
-                            // onRequestPermissionsResult: permissions failed
-                            return;
-                        } else {
-                            // onRequestPermissionsResult: Permissions granted
-                            mLocationPermissionGranted = true;
-                            getLocationPermission();
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
-    // --------------------
-    // BottomNavigationView
-    // --------------------
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                    switch (item.getItemId()) {
-                        case R.id.nav_map:
-                            fm.beginTransaction().hide(active).show(fragment1).commit();
-                            active = fragment1;
-                            getSupportActionBar().setTitle(R.string.toolbar_title);
-                            click =1;
-                            return true;
-
-                        case R.id.nav_list:
-                            fm.beginTransaction().hide(active).show(fragment2).commit();
-                            active = fragment2;
-                            getSupportActionBar().setTitle(R.string.toolbar_title);
-                            click =2;
-                            return true;
-
-                        case R.id.nav_workmates:
-                            fm.beginTransaction().hide(active).show(fragment3).commit();
-                            active = fragment3;
-                            getSupportActionBar().setTitle(R.string.workmates);
-                            click =3;
-                            return true;
-
-                    }
-                    return false;
-                }
-            };
-
-
-    // ----------------------------
-    // CONFIGURATION ProfileActivity
-    // ----------------------------
-    private void openProfileActivity() {
-        Intent profileActivity = new Intent(MainScreen.this, ProfileActivity.class);
-        startActivity(profileActivity);
-    }
-
-    // ----------------------------
-    // CONFIGURATION ChatActivity
-    // ----------------------------
-    private void openChatActivity() {
-        Intent chatActivity = new Intent(MainScreen.this, ChatActivity.class);
-
-
-        if (this.isCurrentUserLogged()) {
-            startActivity(chatActivity);
-        } else {
-            ////////////////////
+        } else if (id == R.id.nav_chat) {
+            openChatActivity();
+        } else if (id == R.id.nav_logout) {
+            Intent intent = new Intent(this, SplashLunchActivity.class);
+            startActivity(intent);
         }
 
-
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
-
+    // ----------------------------
+    // CONFIGURATION NavigationView
+    // ----------------------------
     private void configureNavigationView() {
 
         navigationView.setNavigationItemSelectedListener(this);
@@ -413,37 +296,165 @@ public class MainScreen extends BaseActivity implements NavigationView.OnNavigat
         }
     }
 
+    // --------------------
+    // BottomNavigationView
+    // --------------------
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.bottom_navigation_map:
+                    fm.beginTransaction().hide(active).show(fragment1).commit();
+                    active = fragment1;
+                    getSupportActionBar().setTitle(R.string.toolbar_title);
+                    nav_click = 1;
+                    invalidateOptionsMenu();
+                    return true;
+
+                case R.id.bottom_navigation_list_restaurant:
+                    fm.beginTransaction().hide(active).show(fragment2).commit();
+                    active = fragment2;
+                    getSupportActionBar().setTitle(R.string.toolbar_title);
+                    nav_click = 2;
+                    invalidateOptionsMenu();
+                    return true;
+
+                case R.id.bottom_navigation_list_workmates:
+                    fm.beginTransaction().hide(active).show(fragment3).commit();
+                    active = fragment3;
+                    getSupportActionBar().setTitle(R.string.workmates);
+                    nav_click = 3;
+                    invalidateOptionsMenu();
+                    return true;
+            }
+            return false;
+        }
+    };
+
+
+    // --------------------
+    // searchByRESTAURANT
+    // --------------------
+
+    private void searchNearbyRestaurants(double latitude, double longitude) {
+        Log.d(TAG, "searchNearbyRestaurants: ");
+        String keyword = "";
+        String key = BuildConfig.API_KEY;
+        //String lat = String.valueOf(currentLocation.getLatitude());
+        //String lng = String.valueOf(currentLocation.getLongitude());
+        String lat = String.valueOf(latitude);
+        String lng = String.valueOf(longitude);
+
+        String location = lat + "," + lng;
+
+        Call<NearbyPlacesList> call;
+        ApiInterface googleMapService = ApiClient.getClient().create(ApiInterface.class);
+        call = googleMapService.getNearBy(location, radius, type, keyword, key);
+        call.enqueue(new Callback<NearbyPlacesList>() {
+            @Override
+            public void onResponse(@NonNull Call<NearbyPlacesList> call, @NonNull Response<NearbyPlacesList> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null) {
+                        results = response.body().getResults();
+                        fragment1.updateNearbyPlaces(results);
+                        fragment2.updateNearbyPlaces(results);
+
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NearbyPlacesList> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: ");
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    //TODo 3 start restaurant activity
+
+
+    // ----------------------------
+    // CONFIGURATION ProfileActivity
+    // ----------------------------
+    private void openProfileActivity() {
+        Intent profileActivity = new Intent(LunchActivity.this, ProfileActivity.class);
+        startActivity(profileActivity);
+    }
+
+    // ----------------------------
+    // CONFIGURATION ChatActivity
+    // ----------------------------
+    private void openChatActivity() {
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
+    }
+
+    // ----------------------------
+    // CONFIGURATION permissions
+    // ----------------------------
+    private void getLocationPermission() {
+        FusedLocationProviderClient mFusedLocationProviderClient;
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if (ContextCompat.checkSelfPermission(this, FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionGranted = true;
+
+                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+                Task location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()) {
+                            // onComplete: found location
+                            currentLocation = (Location) task.getResult();
+                            // We pass the user's position to the fragment map
+                            assert currentLocation != null;
+
+                            fragment1.setUserLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                            fragment2.setUserLocation(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                            searchNearbyRestaurants(currentLocation.getLatitude(), currentLocation.getLongitude());
+                        }
+                    }
+                });
+
+            } else {
+                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        } else {
+            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+        }
+    }
+    // ----------------------------
+    //     permission result
+    // ----------------------------
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.main_activity_drawer_chat:
-                drawer.closeDrawer(GravityCompat.START);
-                Log.d(TAG_LOG_MAIN, "onNavigationItemSelected:  your CHAT");
-                openChatActivity();
-                return true;
-            case R.id.main_activity_drawer_lunch:
-                drawer.closeDrawer(GravityCompat.START);
-                Log.d(TAG_LOG_MAIN, "onNavigationItemSelected:  your lunch");
-                return true;
-            case R.id.main_activity_drawer_settings:
-                drawer.closeDrawer(GravityCompat.START);
-                openProfileActivity();
-                Log.d(TAG_LOG_MAIN, "onNavigationItemSelected: Settings");
-                return true;
-            case R.id.main_activity_drawer_logout:
-                drawer.closeDrawer(GravityCompat.START);
-                Intent intent = new Intent(getApplicationContext(), SplashLunchActivity.class);
-                startActivity(intent);
-                Log.d(TAG_LOG_MAIN, "onNavigationItemSelected: logout");
-                return true;
-            default:
-                return false;
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // onRequestPermissionsResult: called
+        mLocationPermissionGranted = false;
+        Log.d(TAG, "onRequestPermissionsResult: ");
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int grantResult : grantResults) {
+                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                            // onRequestPermissionsResult: permissions failed
+                            return;
+                        } else {
+                            // onRequestPermissionsResult: Permissions granted
+                            mLocationPermissionGranted = true;
+                            getLocationPermission();
+                        }
+                    }
+                }
+            }
         }
-
-
     }
 }
-
-
-

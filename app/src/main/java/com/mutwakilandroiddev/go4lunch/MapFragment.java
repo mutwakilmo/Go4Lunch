@@ -1,6 +1,8 @@
 package com.mutwakilandroiddev.go4lunch;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,24 +32,28 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-
+import butterknife.ButterKnife;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, DisplayNearByPlaces {
-    public static final float DEFAULT_ZOOM = 16f;
-    @BindView(R.id.ic_gps)
-    ImageView mGbs;
-    private Marker myMarker;
-    private double myLatitude;
-    private double myLongitude;
-    private String today;
-    private GoogleMap googleMap;
-
 
     private View mView;
 
+    private final static String TAG = "MapFragment";
+
+
+    @BindView(R.id.ic_gps)
+    ImageView mGps;
+
+    private Marker myMarker;
+    private GoogleMap mMap;
+    private double myLatitude;
+    private double myLongitude;
+    private String today;
+    private static final float DEFAULT_ZOOM = 16f;
+
     public MapFragment() {
-        //Required empty constructor
+        // Required empty public constructor
     }
 
     @Override
@@ -55,14 +61,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         super.onCreate(savedInstanceState);
 
     }
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.fragment_map, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mView = inflater.inflate(R.layout.fragment_map, container, false);
 
-        LunchDateFormat lunchDateFormat = new LunchDateFormat();
-        today = lunchDateFormat.getTodayDate();
-
+        LunchDateFormat forToday = new LunchDateFormat();
+        today = forToday.getTodayDate();
+        ButterKnife.bind(this, mView);
         // Default position
         myLatitude = 48.858511;
         myLongitude = 2.294524;
@@ -70,24 +78,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         return mView;
     }
 
-
+    // --------------------
+    // Update nearByPlace
+    // --------------------
     @Override
     public void updateNearbyPlaces(List<GooglePlacesResult> googlePlacesResults) {
         List<GooglePlacesResult> placesToShowId;
         placesToShowId = googlePlacesResults;
         displayNearbyPlaces(placesToShowId);
-
     }
 
-
-    @Override
+    // --------------------
+    // SetUserLocation
+    // --------------------
     public void setUserLocation(LatLng userLatLng) {
-
+        // update location
         myLatitude = userLatLng.latitude;
         myLongitude = userLatLng.longitude;
 
-        if (googleMap != null) {
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude, myLongitude), DEFAULT_ZOOM));
+        if (mMap != null) {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude, myLongitude), DEFAULT_ZOOM));
         }
     }
 
@@ -95,11 +105,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initMap();
+        clickGps();
     }
 
-    //--------------------------------------------------
+    // --------------------
     // Map of the world
-    //--------------------------------------------------
+    // --------------------
+    //initializing map
     private void initMap() {
         MapView mMapView;
         mMapView = mView.findViewById(R.id.map);
@@ -111,52 +123,62 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude, myLongitude), DEFAULT_ZOOM));
+        mMap = googleMap;
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude, myLongitude), DEFAULT_ZOOM));
+        //Todo show current location on the map
+
     }
 
-    //click on the gps
-    private void gpsClick() {
-        mGbs.setOnClickListener(new View.OnClickListener() {
+    // --------------------
+    // OnClick for the GBS icon
+    // --------------------
+    private void clickGps() {
+        // click on gps
+        mGps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude, myLongitude), DEFAULT_ZOOM));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude, myLongitude), DEFAULT_ZOOM));
             }
         });
     }
 
-    //display nearby  places/restaurant
     private void displayNearbyPlaces(List<GooglePlacesResult> idRestaurant) {
         for (int i = 0; i < idRestaurant.size(); i++) {
-            GooglePlacesResult restaurantMe = idRestaurant.get(i);
-            String nameRestaurant = restaurantMe.getName();
-            double LatRestaurant = restaurantMe.getGeometry().getLocation().getLat();
-            double LngRestaurant = restaurantMe.getGeometry().getLocation().getLng();
-            String placeIdRestaurant = restaurantMe.getPlaceId();
+            GooglePlacesResult restaurantLunch = idRestaurant.get(i);
+            String restaurantName = restaurantLunch.getName();
+            double restaurantLat = restaurantLunch.getGeometry().getLocation().getLat();
+            double restaurantLng = restaurantLunch.getGeometry().getLocation().getLng();
+            String restaurantPlaceId = restaurantLunch.getPlaceId();
 
-            LatLng restaurantLatLng = new LatLng(LatRestaurant, LngRestaurant);
-            updateLikeColorPin(placeIdRestaurant, nameRestaurant, restaurantLatLng);
-            //Todo 1 launch restaurant detail
-            googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            LatLng restaurantLatLng = new LatLng(restaurantLat, restaurantLng);
+            updateLikeColorPin(restaurantPlaceId, restaurantName, restaurantLatLng);
+
+            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
                     restaurantDetail(marker);
                 }
             });
-
         }
     }
 
-    //update pin color
+    //---------------------------------------------------------------------------------------------------
+    // Update Pin color from Firebase for selected lunch
+    //---------------------------------------------------------------------------------------------------
     private void updateLikeColorPin(final String placeId, final String name, final LatLng latLng) {
+
+        // The color of the pin is adjusted according to the user's choice
         final MarkerOptions markerOptions = new MarkerOptions();
-        //By default we put red pins
+
+        // By default we put red pins
         markerOptions.position(latLng)
                 .title(name)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.restaurant_locator_for_map_orange));
-        myMarker = googleMap.addMarker(markerOptions);
+        myMarker = mMap.addMarker(markerOptions);
         myMarker.setTag(placeId);
 
 
@@ -164,19 +186,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
+
                     Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
-                    Date dateRestaurant;
+                    Date dateRestaurantSheet;
                     if (restaurant != null) {
-                        dateRestaurant = restaurant.getDateCreated();
+                        dateRestaurantSheet = restaurant.getDateCreated();
                         LunchDateFormat myDate = new LunchDateFormat();
-                        String dateRegistered = myDate.getRegisteredDate(dateRestaurant);
-                        if (dateRegistered == today) {
-                            int numberOfUser = restaurant.getClientTodayList().size();
-                            if (numberOfUser > 0) {
+                        String dateRegistered = myDate.getRegisteredDate(dateRestaurantSheet);
+
+                        if (dateRegistered.equals(today)) {
+                            int lunchUsers = restaurant.getClientTodayList().size();
+                            if (lunchUsers > 0) {
                                 markerOptions.position(latLng)
                                         .title(name)
                                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.restaurant_locator_for_map_green));
-                                myMarker = googleMap.addMarker(markerOptions);
+                                myMarker = mMap.addMarker(markerOptions);
                                 myMarker.setTag(placeId);
                             }
                         }
@@ -186,6 +210,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         });
     }
 
+    //--------------------------------------------------------------------------------------------------------------------
+    //manages the launch of restaurant detail activity
+    //--------------------------------------------------------------------------------------------------------------------
     //launch restaurant detail activity
     private void restaurantDetail(Marker marker) {
         String PLACE_ID_RESTAURANT = "restaurant_place_id";
@@ -196,3 +223,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
         startActivity(intent);
     }
 }
+
+
+
+

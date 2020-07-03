@@ -80,7 +80,7 @@ public class ChatActivity extends BaseActivity implements WorkMatesChatAdapter.L
         super.onCreate(savedInstanceState);
         this.configureRecyclerView(CHAT_NAME_LUNCH);
         this.getCurrentUserFromFirestore();
-        //this.configureToolbar();
+        this.configureToolbar();
 
     }
 

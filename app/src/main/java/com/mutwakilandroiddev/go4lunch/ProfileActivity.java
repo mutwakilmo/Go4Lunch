@@ -49,6 +49,7 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         //this.configureToolbar();
         this.updateUIWhenCreating();
+        this.configureToolbar();
     }
 
     @Override
