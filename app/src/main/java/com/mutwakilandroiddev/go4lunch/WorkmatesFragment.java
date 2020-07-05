@@ -27,7 +27,7 @@ import io.reactivex.annotations.Nullable;
 public class WorkmatesFragment extends Fragment {
     private ListOfWorkmatesAdapter adapter;
     private RecyclerView recyclerView;
-    private String PLACE_ID_RESTAURANT = "restaurant_place_id";
+    private String PLACEIDRESTO = "resto_place_id";
 
     public WorkmatesFragment() {
         // Required empty public constructor
@@ -77,12 +77,12 @@ public class WorkmatesFragment extends Fragment {
                     User user = documentSnapshot.toObject(User.class);
                     String restoId;
                     if (user != null) {
-                        restoId = user.getRestaurantToday();
+                        restoId = user.getRestoToday();
 
 
-                        Intent intent = new Intent(getContext(), RestaurantDetailActivity.class);
-                        intent.putExtra(PLACE_ID_RESTAURANT, restoId);
-                        startActivity(intent);
+                        Intent WVIntent = new Intent(getContext(), RestaurantDetailActivity.class);
+                        WVIntent.putExtra(PLACEIDRESTO, restoId);
+                        startActivity(WVIntent);
                     }
                 }
             }
@@ -102,3 +102,4 @@ public class WorkmatesFragment extends Fragment {
     }
 
 }
+

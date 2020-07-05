@@ -134,7 +134,7 @@ public class ListOfRestaurantsViewHolder extends RecyclerView.ViewHolder{
                         String dateRegistered = myDate.getRegisteredDate(dateRestaurantSheet);
                         if (dateRegistered.equals(today)) {
                             // Number of interested colleagues
-                            List<String> listUsers = restaurant.getClientTodayList();
+                            List<String> listUsers = restaurant.getClientsTodayList();
                             String text = String.valueOf(listUsers.size());
                             loversTextView.setText(text);
                         }

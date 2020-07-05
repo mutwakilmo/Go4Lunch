@@ -158,4 +158,22 @@
     <string name="notif_message1">"Today your meal break will be at: "</string>
     <string name="notif_message2">"You will have a good time with:  "</string>
 
+    <string name="notifications_onoff">"Would you like to receive a notification at midday telling you about the happy colleagues who will join you?"</string>
+
+    <string name="newsearch">"Relaunch the search"</string>
+    <!-- SETTINGS ACTIVITY -->
+    <string name="radius_text">"How far do you want to search? (in meters)"</string>
+    <string-array name="radius_array">
+        <item>200</item>
+        <item>500</item>
+        <item>1000</item>
+    </string-array>
+
+    <string name="type_text">"What kind of establishments are you looking for?"</string>
+    <string-array name="type_array">
+        <item>restaurant</item>
+        <item>bar</item>
+        <item>cafe</item>
+    </string-array>
+
 </resources>

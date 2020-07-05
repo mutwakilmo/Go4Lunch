@@ -1,7 +1,9 @@
 package com.mutwakilandroiddev.go4lunch;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -127,9 +130,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext()  , Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLatitude, myLongitude), DEFAULT_ZOOM));
-        //Todo show current location on the map
+
 
     }
 
@@ -195,7 +208,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
                         String dateRegistered = myDate.getRegisteredDate(dateRestaurantSheet);
 
                         if (dateRegistered.equals(today)) {
-                            int lunchUsers = restaurant.getClientTodayList().size();
+                            int lunchUsers = restaurant.getClientsTodayList().size();
                             if (lunchUsers > 0) {
                                 markerOptions.position(latLng)
                                         .title(name)
@@ -215,7 +228,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, Display
     //--------------------------------------------------------------------------------------------------------------------
     //launch restaurant detail activity
     private void restaurantDetail(Marker marker) {
-        String PLACE_ID_RESTAURANT = "restaurant_place_id";
+        String PLACE_ID_RESTAURANT = "resto_place_id";
         String ref = (String) marker.getTag();
         Intent intent = new Intent(getContext(), RestaurantDetailActivity.class);
         //Id

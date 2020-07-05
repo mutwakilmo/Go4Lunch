@@ -40,7 +40,7 @@ public class ListOfWorkmatesAdapter extends FirestoreRecyclerAdapter<User, ListO
     protected void onBindViewHolder(@NonNull UserHolder userHolder, int i, @NonNull User user) {
         LunchDateFormat forToday = new LunchDateFormat();
         String today = forToday.getTodayDate();
-        String registeredDate = user.getRestaurantDate();
+        String registeredDate = user.getRestoDate();
 
         // Default values
         String text;
@@ -49,9 +49,9 @@ public class ListOfWorkmatesAdapter extends FirestoreRecyclerAdapter<User, ListO
         userHolder.textUser.setTextColor(context.getResources().getColor(R.color.colorMyGrey));
 
         // Specifications if a restaurant was chosen for today
-        if (user.getRestaurantTodayName()!= null && !user.getRestaurantTodayName().isEmpty()) {
+        if (user.getRestoTodayName()!= null && !user.getRestoTodayName().isEmpty()) {
             if(registeredDate.equals(today)){
-                text = user.getUsername() + context.getString(R.string.decided) + user.getRestaurantTodayName();
+                text = user.getUsername() + context.getString(R.string.decided) + user.getRestoTodayName();
                 userHolder.textUser.setTypeface(null, Typeface.NORMAL);
                 userHolder.textUser.setTextColor(context.getResources().getColor(R.color.colorMyBlack));
             }

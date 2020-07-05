@@ -66,12 +66,11 @@ public class MainActivity extends BaseActivity {
     // --------------------
     private void createUserInFirestore() {
         if (this.getCurrentUser() != null) {
-            String urlPicture = (this.getCurrentUser().getPhotoUrl() != null) ?
-                    this.getCurrentUser().getPhotoUrl().toString() : null;
-            String uid = this.getCurrentUser().getUid();
+            String urlPicture = (Objects.requireNonNull(this.getCurrentUser()).getPhotoUrl() != null) ? Objects.requireNonNull(this.getCurrentUser().getPhotoUrl()).toString() : null;
             String username = this.getCurrentUser().getDisplayName();
-
-            UserHelper.createUser(uid, username, urlPicture).addOnFailureListener(this.onFailureListener());
+            String uid = this.getCurrentUser().getUid();
+            String userEmail = this.getCurrentUser().getEmail();
+            UserHelper.createUser(uid, username, userEmail, urlPicture).addOnFailureListener(this.onFailureListener());
         }
     }
 

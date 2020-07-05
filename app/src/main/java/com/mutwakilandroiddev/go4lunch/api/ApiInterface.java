@@ -8,6 +8,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
+    //fix this part
+    @GET("details/json?")
     Call<ListDetailResult> getRestaurantDetail(@Query("key") String apiKey,
                                                @Query("placeid") String restaurantId,
                                                @Query("fields") String fields);

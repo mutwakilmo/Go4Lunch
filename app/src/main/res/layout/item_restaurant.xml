@@ -3,6 +3,8 @@
     android:id="@+id/article_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/card_bg"
+    android:layout_marginBottom="10dp"
 
     android:padding="10dp">
 

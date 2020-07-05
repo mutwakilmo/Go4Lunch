@@ -8,31 +8,32 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 public class RestaurantHelper {
-    public static final String COLLECTION_NAME ="restaurants";
+    private static final String COLLECTION_NAME = "restaurants";
 
-    //collection reference
+    // --- COLLECTION REFERENCE ---
     public static CollectionReference getRestaurantsCollection(){
         return FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
     }
 
-    //create
-    public static Task<Void> createRestaurant(String restaurantId, String restaurantName, String restaurantAddress){
-        Restaurant restaurantToCreate = new Restaurant(restaurantName,restaurantAddress);
-        return RestaurantHelper.getRestaurantsCollection().document(restaurantId).set(restaurantToCreate);
+    // --- CREATE ---
+    public static Task<Void> createRestaurant(String restoId, String restoName, String address) {
+        Restaurant restaurantToCreate = new Restaurant(restoName, address);
+        return RestaurantHelper.getRestaurantsCollection().document(restoId).set(restaurantToCreate);
     }
 
-    //Get
-    public static Task<DocumentSnapshot> getRestaurant(String restaurantId){
-        return RestaurantHelper.getRestaurantsCollection().document(restaurantId).get();
+    // --- GET ---
+    public static Task<DocumentSnapshot> getRestaurant(String restoId){
+        return RestaurantHelper.getRestaurantsCollection().document(restoId).get();
     }
 
-    //update-name
-    public static Task<Void> updateRestaurantName(String restaurantName,String restaurantId){
-        return RestaurantHelper.getRestaurantsCollection().document(restaurantId).update("restaurantName", restaurantName);
+    // --- UPDATE NAME---
+    public static Task<Void> updateRestoName(String restoName, String restoId) {
+        return RestaurantHelper.getRestaurantsCollection().document(restoId).update("restoname", restoName);
     }
 
-    //update restaurant users
-    public static Task<Void> updateClientsTodayList(List<String> clientTodayList, String restaurantId){
-        return RestaurantHelper.getRestaurantsCollection().document(restaurantId).update("clientsTodayList", clientTodayList);
+    // --- UPDATE TODAY'S USERS---
+    public static Task<Void> updateClientsTodayList(List<String> clientsTodayList, String restoId) {
+        return RestaurantHelper.getRestaurantsCollection().document(restoId).update("clientsTodayList", clientsTodayList);
     }
+
 }

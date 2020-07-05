@@ -48,7 +48,7 @@ import retrofit2.Response;
 public class RestaurantDetailActivity extends AppCompatActivity {
 
     private String WEB = "resto_web";
-    private String PLACEIDRESTO = "resto_place_id";
+    private String PLACE_ID_RESTAURANT = "resto_place_id";
     private String restoToday;
     private List<String> listRestoLike= new ArrayList<>();
     private String restoAddress;
@@ -90,7 +90,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         LunchDateFormat forToday = new LunchDateFormat();
         today = forToday.getTodayDate();
         userId = UserHelper.getCurrentUserId();
-        placeidResto = getIntent().getStringExtra(PLACEIDRESTO);
+        placeidResto = getIntent().getStringExtra(PLACE_ID_RESTAURANT);
 
         //---------------------------------------------------------------------------------------------
         // RecyclerView
@@ -260,7 +260,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if (documentSnapshot.exists()) {
                     Log.d(TAG, "onSuccess: documentSnapshot exists");
-                    listRestoLike = Objects.requireNonNull(documentSnapshot.toObject(User.class)).getRestaurantLike();
+                    listRestoLike = Objects.requireNonNull(documentSnapshot.toObject(User.class)).getRestoLike();
                     if (listRestoLike != null) {
                         if (listRestoLike.contains(idResto)) {
                             Log.d(TAG, "onSuccess: retirer le resto");
@@ -301,7 +301,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                         if (dateRegistered.equals(today)) {
                             // the restaurant card of the day already exists so we remove the user
                             List<String> listUsersToday = new ArrayList<>();
-                            listUsersToday = usersToday.getClientTodayList();
+                            listUsersToday = usersToday.getClientsTodayList();
                             listUsersToday.remove(userId);
                             RestaurantHelper.updateClientsTodayList(listUsersToday, id);
                         } else {
@@ -329,7 +329,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                         String dateRegistered = myDate.getRegisteredDate(dateRestoSheet);
                         if (dateRegistered.equals(today)) {
                             List<String> listUsersToday = new ArrayList<>();
-                            listUsersToday = usersToday.getClientTodayList();
+                            listUsersToday = usersToday.getClientsTodayList();
                             listUsersToday.add(userId);
                             RestaurantHelper.updateClientsTodayList(listUsersToday, id);
                         }else {
@@ -359,9 +359,9 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 if (documentSnapshot.exists()) {
                     User myRestoToday = documentSnapshot.toObject(User.class);
                     if (myRestoToday != null) {
-                        lastRestoId = myRestoToday.getRestaurantToday();
-                        lastRestoDate = myRestoToday.getRestaurantDate();
-                        lastRestoName = myRestoToday.getRestaurantTodayName();
+                        lastRestoId = myRestoToday.getRestoToday();
+                        lastRestoDate = myRestoToday.getRestoDate();
+                        lastRestoName = myRestoToday.getRestoTodayName();
 
                         if (lastRestoId != null && lastRestoId.length() > 0 && lastRestoDate.equals(today)) {
                             // A restaurant had already been chosen today
@@ -399,7 +399,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         UserHelper.getUser(userId).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                listRestoLike = Objects.requireNonNull(documentSnapshot.toObject(User.class)).getRestaurantLike();
+                listRestoLike = Objects.requireNonNull(documentSnapshot.toObject(User.class)).getRestoLike();
                 if(listRestoLike!=null) {
                     if (listRestoLike.contains(idLike)) {
                         likeThisResto.setImageResource(R.drawable.ic_action_star);
@@ -422,8 +422,8 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         UserHelper.getUser(userId).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                restoToday = Objects.requireNonNull(documentSnapshot.toObject(User.class)).getRestaurantToday();
-                lastRestoDate = Objects.requireNonNull(documentSnapshot.toObject(User.class)).getRestaurantDate();
+                restoToday = Objects.requireNonNull(documentSnapshot.toObject(User.class)).getRestoToday();
+                lastRestoDate = Objects.requireNonNull(documentSnapshot.toObject(User.class)).getRestoDate();
 
                 if (restoToday != null && restoToday.length()>0&&lastRestoDate.equals(today)) { // We check that there is a restaurant registered and that it was registered today
                     if (restoToday.equals(idToday)) {
@@ -454,7 +454,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                         String dateRegistered = myDate.getRegisteredDate(dateRestoSheet);
 
                         if (dateRegistered.equals(today)) {
-                            List<String> listId = usersToday.getClientTodayList();
+                            List<String> listId = usersToday.getClientsTodayList();
 
                             if (listId != null) {
                                 adapter = new ListOfRestaurantDetailAdapter(listId, Glide.with(recyclerView), listId.size());

@@ -29,7 +29,9 @@ android {
         it.buildConfigField 'String', 'API_KEY', MAP_API_KEY
     }
 
-
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
     //    Add this to your build.gradle for Butter knife
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

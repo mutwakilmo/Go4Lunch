@@ -44,9 +44,10 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.firestore.DocumentSnapshot;
+
 import com.mutwakilandroiddev.go4lunch.api.ApiClient;
 import com.mutwakilandroiddev.go4lunch.api.ApiInterface;
+
 import com.mutwakilandroiddev.go4lunch.api.UserHelper;
 import com.mutwakilandroiddev.go4lunch.base.BaseActivity;
 import com.mutwakilandroiddev.go4lunch.models.nearby.GooglePlacesResult;
@@ -71,7 +72,7 @@ public class LunchActivity extends BaseActivity
     final FragmentManager fm = getSupportFragmentManager();
     Fragment active = fragment1;
 
-    private String PLACE_ID_RESTAURANT = "restaurant_place_id";
+    private String PLACE_ID_RESTAURANT = "resto_place_id";
 
     public static final String SHARED_PREFS = "SharedPrefs";
     public static final String RADIUS_PREFS = "radiusForSearch";
@@ -246,7 +247,7 @@ public class LunchActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_mylunch) {
-            //startDetailActivity();
+            startDetailActivity();
             //Todo 2 start restaurant detail activity
 
         } else if (id == R.id.nav_settings) {
@@ -254,6 +255,9 @@ public class LunchActivity extends BaseActivity
 
         } else if (id == R.id.nav_chat) {
             openChatActivity();
+        } else if (id == R.id.nav_search) {
+            Intent intent = new Intent(this, NotificationAndSearchActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
             Intent intent = new Intent(this, SplashLunchActivity.class);
             startActivity(intent);
@@ -359,8 +363,8 @@ public class LunchActivity extends BaseActivity
                     if (response.body() != null) {
                         results = response.body().getResults();
                         fragment1.updateNearbyPlaces(results);
-                        //Todo 4 fix bugs to display restaurant adapter
-                    //    fragment2.updateNearbyPlaces(results);
+                        //Todo 6fix bugs to display restaurant adapter
+                    fragment2.updateNearbyPlaces(results);
 
                     }
 
@@ -378,23 +382,23 @@ public class LunchActivity extends BaseActivity
     }
 
 
-//    private void startDetailActivity() {
-//        String userId=  UserHelper.getCurrentUserId();
-//        UserHelper.getUser(userId).addOnSuccessListener(documentSnapshot -> {
-//            User user = documentSnapshot.toObject(User.class);
-//            String lunch;
-//            if (user != null) {
-//                lunch = user.getRestaurantToday();
-//                if (lunch.equals("")) {
-//                    Toast.makeText(mContext, R.string.no_lunch, Toast.LENGTH_LONG).show();
-//                } else {
-//                    Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
-//                    intent.putExtra(PLACE_ID_RESTAURANT, lunch);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
-//    }
+    private void startDetailActivity() {
+        String userId=  UserHelper.getCurrentUserId();
+        UserHelper.getUser(userId).addOnSuccessListener(documentSnapshot -> {
+            com.mutwakilandroiddev.go4lunch.api.User user = documentSnapshot.toObject(com.mutwakilandroiddev.go4lunch.api.User.class);
+            String lunch;
+            if (user != null) {
+                lunch = user.getRestoToday();
+                if (lunch.equals("")) {
+                    Toast.makeText(mContext, R.string.no_lunch, Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
+                    intent.putExtra(PLACE_ID_RESTAURANT, lunch);
+                    startActivity(intent);
+                }
+            }
+        });
+    }
 
 
     // ----------------------------
