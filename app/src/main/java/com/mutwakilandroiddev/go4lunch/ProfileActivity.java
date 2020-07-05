@@ -36,8 +36,8 @@ public class ProfileActivity extends BaseActivity {
     TextView textViewEmail;
     @BindView(R.id.profile_activity_progress_bar)
     ProgressBar progressBar;
-    @BindView(R.id.profile_activity_check_box_is_mentor)
-    CheckBox checkBoxIsMentor; // 1 - Adding CheckBox Mentor View
+    @BindView(R.id.profile_activity_check_box_is_workmates)
+    CheckBox checkBoxIsWorkMates; // 1 - Adding CheckBox Mentor View
 
     //FOR DATA
     private static final int SIGN_OUT_TASK = 10;
@@ -89,9 +89,9 @@ public class ProfileActivity extends BaseActivity {
                 .show();
     }
 
-    @OnClick(R.id.profile_activity_check_box_is_mentor)
+    @OnClick(R.id.profile_activity_check_box_is_workmates)
     public void onClickCheckBoxIsMentor() {
-        this.updateUserIsMentor();
+        this.updateUserIsWorkMates();
     }
 
     // --------------------
@@ -130,9 +130,9 @@ public class ProfileActivity extends BaseActivity {
     }
 
     // 2 - Update User Mentor (is or not)
-    private void updateUserIsMentor() {
+    private void updateUserIsWorkMates() {
         if (this.getCurrentUser() != null) {
-            UserHelper.updateIsMentor(this.getCurrentUser().getUid(), this.checkBoxIsMentor.isChecked()).addOnFailureListener(this.onFailureListener());
+            UserHelper.updateIsMentor(this.getCurrentUser().getUid(), this.checkBoxIsWorkMates.isChecked()).addOnFailureListener(this.onFailureListener());
         }
     }
 
@@ -164,7 +164,7 @@ public class ProfileActivity extends BaseActivity {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     User currentUser = documentSnapshot.toObject(User.class);
                     String username = TextUtils.isEmpty(currentUser.getUsername()) ? getString(R.string.info_no_username_found) : currentUser.getUsername();
-                    checkBoxIsMentor.setChecked(currentUser.getIsMentor());
+                    checkBoxIsWorkMates.setChecked(currentUser.getIsWorkMates());
                     textInputEditTextUsername.setText(username);
                 }
             });

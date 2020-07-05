@@ -9,7 +9,7 @@ public class User {
 
     private String uid;
     private String username;
-    private Boolean isMentor;
+    private Boolean isWorkMates;
     @Nullable private String urlPicture;
     private String restaurantToday;
     private String restaurantTodayName;
@@ -22,7 +22,7 @@ public class User {
         this.uid = uid;
         this.username = username;
         this.urlPicture = urlPicture;
-        this.isMentor = false;
+        this.isWorkMates = false;
         this.restaurantToday = "";
         this.restaurantTodayName = "";
         this.restaurantDate = "";
@@ -35,7 +35,7 @@ public class User {
     public String getUid() { return uid; }
     public String getUsername() { return username; }
     public String getUrlPicture() { return urlPicture; }
-    public Boolean getIsMentor() { return isMentor; }
+    public Boolean getIsWorkMates() { return isWorkMates; }
     public String getRestaurantToday() { return restaurantToday;}
     public String getRestaurantTodayName() {return restaurantTodayName;}
     public String getRestaurantDate() {return restaurantDate;}
@@ -44,7 +44,7 @@ public class User {
     public void setUsername(String username) { this.username = username; }
     public void setUid(String uid) { this.uid = uid; }
     public void setUrlPicture(String urlPicture) { this.urlPicture = urlPicture; }
-    public void setIsMentor(Boolean mentor) { isMentor = mentor; }
+    public void setIsWorkMates(Boolean mentor) { isWorkMates = mentor; }
     public void setRestaurantToday(String restaurantToday) {this.restaurantToday = restaurantToday;}
     public void setRestaurantTodayName(String restaurantTodayName) {this.restaurantTodayName = restaurantTodayName;}
     public void setRestaurantDate(String restaurantDate) {this.restaurantDate = restaurantDate;}

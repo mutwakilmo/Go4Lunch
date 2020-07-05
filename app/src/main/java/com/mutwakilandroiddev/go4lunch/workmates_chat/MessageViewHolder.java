@@ -88,8 +88,8 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         if (message.getDateCreated() != null)
             this.textViewDate.setText(this.convertDateToHour(message.getDateCreated()));
 
-        // Update isMentor ImageView
-        this.imageViewIsMentor.setVisibility(message.getUserSender().getIsMentor() ? View.VISIBLE : View.INVISIBLE);
+        // Update workmates ImageView
+        this.imageViewIsMentor.setVisibility(message.getUserSender().getIsWorkMates() ? View.VISIBLE : View.INVISIBLE);
 
         // Update profile picture ImageView
         if (message.getUserSender().getUrlPicture() != null)

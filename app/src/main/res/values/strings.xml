@@ -59,7 +59,7 @@
     <string name="popup_message_confirmation_delete_account">Are you sure you want to delete your account?</string>
     <string name="popup_message_choice_yes">Yes !</string>
     <string name="popup_message_choice_no">No</string>
-    <string name="check_box_is_mentor">Are you a mentor?</string>
+    <string name="check_box_is_workmates">Are you a workmates?</string>
 
     <!-- CHAT ACTIVITY -->
     <string name="text_input_title_chat_activity">Send your message</string>

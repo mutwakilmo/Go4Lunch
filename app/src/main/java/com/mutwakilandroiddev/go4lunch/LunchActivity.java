@@ -105,7 +105,7 @@ public class LunchActivity extends BaseActivity
         setContentView(R.layout.activity_lunch);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        mContext = this;
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -355,7 +355,8 @@ public class LunchActivity extends BaseActivity
                     if (response.body() != null) {
                         results = response.body().getResults();
                         fragment1.updateNearbyPlaces(results);
-                        fragment2.updateNearbyPlaces(results);
+                        //Todo 4 fix bugs to display restaurant adapter
+                    //    fragment2.updateNearbyPlaces(results);
 
                     }
 

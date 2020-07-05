@@ -52,4 +52,6 @@ public class Restaurant {
     public void setClientTodayList(List<String> clientTodayList) {
         this.clientTodayList = clientTodayList;
     }
+
+
 }
