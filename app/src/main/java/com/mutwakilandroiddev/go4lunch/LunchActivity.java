@@ -28,10 +28,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -42,8 +44,10 @@ import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.mutwakilandroiddev.go4lunch.api.ApiClient;
 import com.mutwakilandroiddev.go4lunch.api.ApiInterface;
+import com.mutwakilandroiddev.go4lunch.api.UserHelper;
 import com.mutwakilandroiddev.go4lunch.base.BaseActivity;
 import com.mutwakilandroiddev.go4lunch.models.nearby.GooglePlacesResult;
 import com.mutwakilandroiddev.go4lunch.models.nearby.NearbyPlacesList;
@@ -373,7 +377,24 @@ public class LunchActivity extends BaseActivity
         });
     }
 
-    //TODo 3 start restaurant activity
+
+//    private void startDetailActivity() {
+//        String userId=  UserHelper.getCurrentUserId();
+//        UserHelper.getUser(userId).addOnSuccessListener(documentSnapshot -> {
+//            User user = documentSnapshot.toObject(User.class);
+//            String lunch;
+//            if (user != null) {
+//                lunch = user.getRestaurantToday();
+//                if (lunch.equals("")) {
+//                    Toast.makeText(mContext, R.string.no_lunch, Toast.LENGTH_LONG).show();
+//                } else {
+//                    Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
+//                    intent.putExtra(PLACE_ID_RESTAURANT, lunch);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
+//    }
 
 
     // ----------------------------

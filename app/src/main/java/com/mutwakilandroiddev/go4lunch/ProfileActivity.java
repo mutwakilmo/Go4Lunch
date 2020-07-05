@@ -132,7 +132,7 @@ public class ProfileActivity extends BaseActivity {
     // 2 - Update User Mentor (is or not)
     private void updateUserIsWorkMates() {
         if (this.getCurrentUser() != null) {
-            UserHelper.updateIsMentor(this.getCurrentUser().getUid(), this.checkBoxIsWorkMates.isChecked()).addOnFailureListener(this.onFailureListener());
+          //  UserHelper.updateIsWorkMates(this.getCurrentUser().getUid(), this.checkBoxIsWorkMates.isChecked()).addOnFailureListener(this.onFailureListener());
         }
     }
 
@@ -164,7 +164,7 @@ public class ProfileActivity extends BaseActivity {
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     User currentUser = documentSnapshot.toObject(User.class);
                     String username = TextUtils.isEmpty(currentUser.getUsername()) ? getString(R.string.info_no_username_found) : currentUser.getUsername();
-                    checkBoxIsWorkMates.setChecked(currentUser.getIsWorkMates());
+                   // checkBoxIsWorkMates.setChecked(currentUser.getIsWorkMates());
                     textInputEditTextUsername.setText(username);
                 }
             });

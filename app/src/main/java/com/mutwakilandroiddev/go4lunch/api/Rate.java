@@ -1,12 +1,12 @@
-package com.mutwakilandroiddev.go4lunch.utils;
+package com.mutwakilandroiddev.go4lunch.api;
 
 import android.view.View;
 import android.widget.ImageView;
 
-public class RestaurantRate {
+public class Rate {
     // No star under 2.5, 1 star between 2.6 and 3.5, 2 stars between 3.6 and 4.5, and 3 stars above
 
-    public RestaurantRate(double rate, ImageView star1, ImageView star2, ImageView star3) {
+    public Rate(double rate, ImageView star1, ImageView star2, ImageView star3) {
         int rate_int = (int) Math.round(rate);
 
         switch (rate_int) {
