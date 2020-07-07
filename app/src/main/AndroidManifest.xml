@@ -18,36 +18,55 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.NotificationAndSearchActivity"></activity>
+
         <activity
             android:name=".view.LunchActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoTitle" />
-        <activity android:name=".view.RestaurantDetailActivity" />
-        <activity android:name=".view.WebActivity"
-            android:parentActivityName=".view.LunchActivity"/>
+
+        <activity
+            android:name=".view.RestaurantDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.WebActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".view.LunchActivity"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".workmates_chat.ChatActivity"
-            android:parentActivityName=".view.LunchActivity" />
+            android:configChanges="orientation"
+            android:parentActivityName=".view.LunchActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.SplashLunchActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoTitle"/>
+            android:theme="@style/AppTheme.NoTitle" />
 
 
         <activity
             android:name=".view.ProfileActivity"
+            android:configChanges="orientation"
             android:label="@string/toolbar_title_login_activity"
-            android:parentActivityName=".view.LunchActivity" />
+            android:parentActivityName=".view.LunchActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.MainActivity"
             android:theme="@style/AppTheme.NoTitle" />
+
+        <activity
+            android:name=".view.NotificationAndSearchActivity"
+            android:parentActivityName=".view.LunchActivity" />
         <activity
             android:name=".view.OnBoardingLunchActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoTitle" >
+            android:theme="@style/AppTheme.NoTitle">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

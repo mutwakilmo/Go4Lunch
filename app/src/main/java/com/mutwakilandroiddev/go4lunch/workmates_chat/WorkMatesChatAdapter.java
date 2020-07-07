@@ -10,22 +10,17 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.mutwakilandroiddev.go4lunch.R;
 import com.mutwakilandroiddev.go4lunch.api.Message;
-
 public class WorkMatesChatAdapter extends FirestoreRecyclerAdapter<Message, MessageViewHolder> {
 
-    //--------------------------------------------------------------------------------------------
-    //Explanations: We have created an Adapter here that looks fairly simple at first. However,
-    //it inherits from FirestoreRecyclerAdapter, an object available in the library FirebaseUI.
-    //--------------------------------------------------------------------------------------------
     public interface Listener {
         void onDataChanged();
     }
 
-    //For DATA
+    //FOR DATA
     private final RequestManager glide;
     private final String idCurrentUser;
 
-    //For COMMUNICATION
+    //FOR COMMUNICATION
     private Listener callback;
 
     public WorkMatesChatAdapter(@NonNull FirestoreRecyclerOptions<Message> options, RequestManager glide, Listener callback, String idCurrentUser) {
@@ -40,8 +35,9 @@ public class WorkMatesChatAdapter extends FirestoreRecyclerAdapter<Message, Mess
         holder.updateWithMessage(model, this.idCurrentUser, this.glide);
     }
 
+    @NonNull
     @Override
-    public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new MessageViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.activity_workmates_chat_item, parent, false));
     }
@@ -52,3 +48,4 @@ public class WorkMatesChatAdapter extends FirestoreRecyclerAdapter<Message, Mess
         this.callback.onDataChanged();
     }
 }
+

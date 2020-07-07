@@ -65,8 +65,7 @@
     <string name="text_input_title_chat_activity">Send your message</string>
     <string name="button_title_chat_activity">SEND</string>
     <string name="text_view_chat_error">This thread currently contains no messages…</string>
-    <string name="popup_title_permission_files_access">This app needs permission to run.</string>
-    <string name="toast_title_no_image_chosen">No image chosen…</string>
+
 
     <!-- Navigation bottom View -->
     <string name="title_map_view">Map View</string>
@@ -176,4 +175,18 @@
         <item>cafe</item>
     </string-array>
 
+
+    <!-- CHAT ACTIVITY -->
+    <string name="toolbar_title_chat_activity">Chats</string>
+    <string name="text_input_title_user_chat_activity">Compose your message</string>
+    <string name="button_title_user_chat_activity">SEND</string>
+    <string name="text_view_user_chat_error">This thread contains for the moment no message</string>
+    <string name="popup_title_permission_files_access">This application needs permission to work.</string>
+    <string name="toast_title_no_image_chosen">"No image chosen …"</string>
+    <string name="chat_image_preview">"Image"</string>
+    <string name="chat_add">"Add an image"</string>
+    <string name="chat_title_restaurants">"Which restaurant for today?"</string>
+    <string name="chat_title_good">"Good times!"</string>
+    <string name="chat_image_sent">"Image sent"</string>
+    <string name="chat_image_profile">"Photo profil"</string>
 </resources>
