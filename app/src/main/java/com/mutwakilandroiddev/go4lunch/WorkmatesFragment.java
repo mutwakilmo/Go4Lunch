@@ -19,7 +19,7 @@ import com.google.firebase.firestore.Query;
 import com.mutwakilandroiddev.go4lunch.api.User;
 import com.mutwakilandroiddev.go4lunch.api.UserHelper;
 import com.mutwakilandroiddev.go4lunch.utils.MyDividerItemDecoration;
-import com.mutwakilandroiddev.go4lunch.view.ListOfWorkmatesAdapter;
+import com.mutwakilandroiddev.go4lunch.adapter.ListOfWorkmatesAdapter;
 
 
 import io.reactivex.annotations.Nullable;

@@ -25,57 +25,39 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MessageViewHolder extends RecyclerView.ViewHolder {
-    //---------------------------------------------------------------------------------------------
-    //    Explanations: This ViewHolder represents each line in the RecyclerView, and therefore visually
-    //    each message. I'll let you check out the corresponding layout so that you can absorb it and
-    //    understand the visual logic. To sum it, up, we have the method  updateWithMessage()  which will
-    //    update the various views from ViewHolder based on a Message object passed as a parameter.
-    //---------------------------------------------------------------------------------------------
 
     //ROOT VIEW
-    @BindView(R.id.activity_mentor_chat_item_root_view)
-    RelativeLayout rootView;
+    @BindView(R.id.activity_mentor_chat_item_root_view) RelativeLayout rootView;
 
     //PROFILE CONTAINER
-    @BindView(R.id.activity_chat_item_profile_container)
-    LinearLayout profileContainer;
-    @BindView(R.id.activity_chat_item_profile_container_profile_image)
-    ImageView imageViewProfile;
-    @BindView(R.id.activity_chat_item_profile_container_is_mentor_image)
-    ImageView imageViewIsMentor;
+    @BindView(R.id.activity_chat_item_profile_container) LinearLayout profileContainer;
+    @BindView(R.id.activity_chat_item_profile_container_profile_image) ImageView imageViewProfile;
+    @BindView(R.id.activity_chat_item_profile_container_is_mentor_image) ImageView imageViewIsMentor;
 
     //MESSAGE CONTAINER
-    @BindView(R.id.activity_mentor_chat_item_message_container)
-    RelativeLayout messageContainer;
-    //IMAGE SEND-ed CONTAINER
-    @BindView(R.id.activity_chat_item_message_container_image_sent_cardview)
-    CardView cardViewImageSent;
-    @BindView(R.id.activity_chat_item_message_container_image_sent_cardview_image)
-    ImageView imageViewSent;
+    @BindView(R.id.activity_mentor_chat_item_message_container) RelativeLayout messageContainer;
+    //IMAGE SENDED CONTAINER
+    @BindView(R.id.activity_chat_item_message_container_image_sent_cardview) CardView cardViewImageSent;
+    @BindView(R.id.activity_chat_item_message_container_image_sent_cardview_image) ImageView imageViewSent;
     //TEXT MESSAGE CONTAINER
-    @BindView(R.id.activity_chat_item_message_container_text_message_container)
-    LinearLayout textMessageContainer;
-    @BindView(R.id.activity_chat_item_message_container_text_message_container_text_view)
-    TextView textViewMessage;
+    @BindView(R.id.activity_chat_item_message_container_text_message_container) LinearLayout textMessageContainer;
+    @BindView(R.id.activity_chat_item_message_container_text_message_container_text_view) TextView textViewMessage;
     //DATE TEXT
-    @BindView(R.id.activity_chat_item_message_container_text_view_date)
-    TextView textViewDate;
+    @BindView(R.id.activity_chat_item_message_container_text_view_date) TextView textViewDate;
+
 
     //FOR DATA
     private final int colorCurrentUser;
     private final int colorRemoteUser;
 
-
-    //--Constructor
-    public MessageViewHolder(@NonNull View itemView) {
+    public MessageViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         colorCurrentUser = ContextCompat.getColor(itemView.getContext(), R.color.colorAccent);
         colorRemoteUser = ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary);
     }
 
-
-    public void updateWithMessage(Message message, String currentUserId, RequestManager glide) {
+    public void updateWithMessage(Message message, String currentUserId, RequestManager glide){
 
         // Check if current user is the sender
         Boolean isCurrentUser = message.getUserSender().getUid().equals(currentUserId);
@@ -85,10 +67,9 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         this.textViewMessage.setTextAlignment(isCurrentUser ? View.TEXT_ALIGNMENT_TEXT_END : View.TEXT_ALIGNMENT_TEXT_START);
 
         // Update date TextView
-        if (message.getDateCreated() != null)
-            this.textViewDate.setText(this.convertDateToHour(message.getDateCreated()));
+        if (message.getDateCreated() != null) this.textViewDate.setText(this.convertDateToHour(message.getDateCreated()));
 
-        // Update workmates ImageView
+        // Update isMentor ImageView
         this.imageViewIsMentor.setVisibility(message.getUserSender().getIsWorkMates() ? View.VISIBLE : View.INVISIBLE);
 
         // Update profile picture ImageView
@@ -98,7 +79,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
                     .into(imageViewProfile);
 
         // Update image sent ImageView
-        if (message.getUrlImage() != null) {
+        if (message.getUrlImage() != null){
             glide.load(message.getUrlImage())
                     .into(imageViewSent);
             this.imageViewSent.setVisibility(View.VISIBLE);
@@ -113,7 +94,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         this.updateDesignDependingUser(isCurrentUser);
     }
 
-    private void updateDesignDependingUser(Boolean isSender) {
+    private void updateDesignDependingUser(Boolean isSender){
 
         // PROFILE CONTAINER
         RelativeLayout.LayoutParams paramsLayoutHeader = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -125,7 +106,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
         paramsLayoutContent.addRule(isSender ? RelativeLayout.LEFT_OF : RelativeLayout.RIGHT_OF, R.id.activity_chat_item_profile_container);
         this.messageContainer.setLayoutParams(paramsLayoutContent);
 
-        // CARD-VIEW IMAGE SEND
+        // CARDVIEW IMAGE SEND
         RelativeLayout.LayoutParams paramsImageView = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         paramsImageView.addRule(isSender ? RelativeLayout.ALIGN_LEFT : RelativeLayout.ALIGN_RIGHT, R.id.activity_chat_item_message_container_text_message_container);
         this.cardViewImageSent.setLayoutParams(paramsImageView);
@@ -135,7 +116,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder {
 
     // ---
 
-    private String convertDateToHour(Date date) {
+    private String convertDateToHour(Date date){
         DateFormat dfTime = new SimpleDateFormat("HH:mm");
         return dfTime.format(date);
     }

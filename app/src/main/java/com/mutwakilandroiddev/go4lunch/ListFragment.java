@@ -20,7 +20,7 @@ import com.mutwakilandroiddev.go4lunch.api.ApiInterface;
 import com.mutwakilandroiddev.go4lunch.models.details.ListDetailResult;
 import com.mutwakilandroiddev.go4lunch.models.details.RestaurantDetailResult;
 import com.mutwakilandroiddev.go4lunch.models.nearby.GooglePlacesResult;
-import com.mutwakilandroiddev.go4lunch.view.ListOfRestaurantsAdapter;
+import com.mutwakilandroiddev.go4lunch.adapter.ListOfRestaurantsAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

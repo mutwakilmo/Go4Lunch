@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch.view;
+package com.mutwakilandroiddev.go4lunch.adapter;
 
 import android.location.Location;
 import android.view.View;

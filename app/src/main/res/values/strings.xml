@@ -158,7 +158,7 @@
     <string name="notif_message1">"Today your meal break will be at: "</string>
     <string name="notif_message2">"You will have a good time with:  "</string>
 
-    <string name="notifications_onoff">"Would you like to receive a notification at midday telling you about the happy colleagues who will join you?"</string>
+    <string name="notifications_onoff">"Would you like to receive a notification at midday telling you about the happy workmates who will join you?"</string>
 
     <string name="newsearch">"Relaunch the search"</string>
     <!-- SETTINGS ACTIVITY -->

@@ -243,7 +243,7 @@ public class LunchActivity extends BaseActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
+        // Handle navigation adapter item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_mylunch) {

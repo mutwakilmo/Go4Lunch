@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch.view;
+package com.mutwakilandroiddev.go4lunch.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -33,14 +33,14 @@ public class ListOfRestaurantDetailAdapter extends RecyclerView.Adapter<ListOfRe
     @NonNull
     @Override
     public ListOfRestaurantDetailViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Creates view holder and inflates its xml layout
+        // Creates adapter holder and inflates its xml layout
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_workmates, parent, false);
         return new ListOfRestaurantDetailViewHolder(view, context);
     }
 
-    // update view holder
+    // update adapter holder
     @Override
     public void onBindViewHolder(@NonNull ListOfRestaurantDetailViewHolder viewHolder, int position) {
         viewHolder.updateWithDetails(this.clientsList.get(position), this.glide);

@@ -132,7 +132,7 @@ public class ProfileActivity extends BaseActivity {
     // 2 - Update User Mentor (is or not)
     private void updateUserIsWorkMates() {
         if (this.getCurrentUser() != null) {
-          //  UserHelper.updateIsWorkMates(this.getCurrentUser().getUid(), this.checkBoxIsWorkMates.isChecked()).addOnFailureListener(this.onFailureListener());
+           UserHelper.updateIsWorkMates(this.getCurrentUser().getUid(), this.checkBoxIsWorkMates.isChecked()).addOnFailureListener(this.onFailureListener());
         }
     }
 

@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch.view;
+package com.mutwakilandroiddev.go4lunch.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;

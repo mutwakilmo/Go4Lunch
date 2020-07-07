@@ -34,7 +34,7 @@ import com.mutwakilandroiddev.go4lunch.api.UserHelper;
 import com.mutwakilandroiddev.go4lunch.models.details.ListDetailResult;
 import com.mutwakilandroiddev.go4lunch.models.details.RestaurantDetailResult;
 import com.mutwakilandroiddev.go4lunch.utils.LunchDateFormat;
-import com.mutwakilandroiddev.go4lunch.view.ListOfRestaurantDetailAdapter;
+import com.mutwakilandroiddev.go4lunch.adapter.ListOfRestaurantDetailAdapter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -195,7 +195,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         // Like or not
         //-------------------------------------------------------------------------------------------
         likeThisResto =  findViewById(R.id.like_detail_button);
-        // update view
+        // update adapter
         updateLikeView(placeidResto);
         likeThisResto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,7 +209,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         // Choose this restaurant today
         //------------------------------------------------------------------------------------------
         myRestoTodayBtn = findViewById(R.id.restoToday_FloatingButton);
-        // update view
+        // update adapter
         updateTodayView(placeidResto);
         myRestoTodayBtn.setOnClickListener(new View.OnClickListener() {
             @Override

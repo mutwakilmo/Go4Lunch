@@ -152,10 +152,10 @@ public class ChatActivity extends BaseActivity implements WorkMatesChatAdapter.L
                 this.configureRecyclerView(CHAT_NAME_LUNCH);
                 break;
             case 20:
-                this.configureRecyclerView(CHAT_NAME_FUN);
+                //this.configureRecyclerView(CHAT_NAME_FUN);
                 break;
             case 30:
-                this.configureRecyclerView(CHAT_NAME_WORK);
+               // this.configureRecyclerView(CHAT_NAME_WORK);
                 break;
         }
     }
