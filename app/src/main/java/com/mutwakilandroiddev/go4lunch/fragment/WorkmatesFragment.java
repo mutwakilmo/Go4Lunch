@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch;
+package com.mutwakilandroiddev.go4lunch.fragment;
 
 
 import android.content.Intent;
@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
+import com.mutwakilandroiddev.go4lunch.R;
+import com.mutwakilandroiddev.go4lunch.view.RestaurantDetailActivity;
 import com.mutwakilandroiddev.go4lunch.api.User;
 import com.mutwakilandroiddev.go4lunch.api.UserHelper;
 import com.mutwakilandroiddev.go4lunch.utils.MyDividerItemDecoration;

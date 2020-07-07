@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch;
+package com.mutwakilandroiddev.go4lunch.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Switch;
+
+import com.mutwakilandroiddev.go4lunch.R;
+
 
 public class NotificationAndSearchActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public static final String SHARED_PREFS = "SharedPrefs";
@@ -33,7 +36,7 @@ public class NotificationAndSearchActivity extends AppCompatActivity implements 
         SharedPreferences  sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        //final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+
         String radiusString = sharedPreferences.getString(RADIUS_PREFS, "500");
         String type = sharedPreferences.getString(TYPE_PREFS, "restaurant");
 

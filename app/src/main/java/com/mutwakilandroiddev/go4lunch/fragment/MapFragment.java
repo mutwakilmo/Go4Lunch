@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch;
+package com.mutwakilandroiddev.go4lunch.fragment;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -26,9 +26,12 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.mutwakilandroiddev.go4lunch.R;
+import com.mutwakilandroiddev.go4lunch.view.RestaurantDetailActivity;
 import com.mutwakilandroiddev.go4lunch.api.Restaurant;
 import com.mutwakilandroiddev.go4lunch.api.RestaurantHelper;
 import com.mutwakilandroiddev.go4lunch.models.nearby.GooglePlacesResult;
+import com.mutwakilandroiddev.go4lunch.utils.DisplayNearByPlaces;
 import com.mutwakilandroiddev.go4lunch.utils.LunchDateFormat;
 
 import java.util.Date;

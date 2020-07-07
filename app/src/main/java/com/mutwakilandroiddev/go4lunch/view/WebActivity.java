@@ -1,10 +1,12 @@
-package com.mutwakilandroiddev.go4lunch;
+package com.mutwakilandroiddev.go4lunch.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.mutwakilandroiddev.go4lunch.R;
 
 public class WebActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch;
+package com.mutwakilandroiddev.go4lunch.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.mutwakilandroiddev.go4lunch.R;
 
 public class SliderAdapter extends PagerAdapter {
 

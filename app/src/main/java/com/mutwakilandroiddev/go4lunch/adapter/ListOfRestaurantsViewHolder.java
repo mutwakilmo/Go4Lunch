@@ -13,7 +13,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.mutwakilandroiddev.go4lunch.BuildConfig;
 import com.mutwakilandroiddev.go4lunch.R;
-import com.mutwakilandroiddev.go4lunch.api.Rate;
+import com.mutwakilandroiddev.go4lunch.utils.RestaurantRate;
 import com.mutwakilandroiddev.go4lunch.api.Restaurant;
 
 import com.mutwakilandroiddev.go4lunch.api.RestaurantHelper;
@@ -102,9 +102,9 @@ public class ListOfRestaurantsViewHolder extends RecyclerView.ViewHolder{
         // Assign the number of stars
         if (restaurantDetail.getRating()!= null) {
             Double rate = restaurantDetail.getRating();
-            Rate restaurantRate = new Rate(rate, star1, star2, star3);
+            RestaurantRate restaurantRate = new RestaurantRate(rate, star1, star2, star3);
         } else {
-            Rate restaurantRate = new Rate(0, star1, star2, star3);
+            RestaurantRate restaurantRate = new RestaurantRate(0, star1, star2, star3);
         }
 
         // Images

@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch;
+package com.mutwakilandroiddev.go4lunch.utils;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mutwakilandroiddev.go4lunch.models.nearby.GooglePlacesResult;

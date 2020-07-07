@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.mutwakilandroiddev.go4lunch.MainActivity;
+import com.mutwakilandroiddev.go4lunch.view.MainActivity;
 import com.mutwakilandroiddev.go4lunch.R;
 import com.mutwakilandroiddev.go4lunch.api.Restaurant;
 import com.mutwakilandroiddev.go4lunch.api.RestaurantHelper;

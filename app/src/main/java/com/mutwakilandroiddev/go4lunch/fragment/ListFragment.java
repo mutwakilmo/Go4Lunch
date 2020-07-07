@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch;
+package com.mutwakilandroiddev.go4lunch.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,12 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.model.LatLng;
+import com.mutwakilandroiddev.go4lunch.BuildConfig;
+import com.mutwakilandroiddev.go4lunch.view.LunchActivity;
+import com.mutwakilandroiddev.go4lunch.R;
+import com.mutwakilandroiddev.go4lunch.view.RestaurantDetailActivity;
 import com.mutwakilandroiddev.go4lunch.api.ApiClient;
 import com.mutwakilandroiddev.go4lunch.api.ApiInterface;
 import com.mutwakilandroiddev.go4lunch.models.details.ListDetailResult;
 import com.mutwakilandroiddev.go4lunch.models.details.RestaurantDetailResult;
 import com.mutwakilandroiddev.go4lunch.models.nearby.GooglePlacesResult;
 import com.mutwakilandroiddev.go4lunch.adapter.ListOfRestaurantsAdapter;
+import com.mutwakilandroiddev.go4lunch.utils.DisplayNearByPlaces;
 
 import java.util.ArrayList;
 import java.util.List;

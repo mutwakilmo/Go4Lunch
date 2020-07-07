@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch;
+package com.mutwakilandroiddev.go4lunch.view;
 
 
 import android.content.Intent;
@@ -16,6 +16,8 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.mutwakilandroiddev.go4lunch.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

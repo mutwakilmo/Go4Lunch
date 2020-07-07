@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch;
+package com.mutwakilandroiddev.go4lunch.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +23,11 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.mutwakilandroiddev.go4lunch.BuildConfig;
+import com.mutwakilandroiddev.go4lunch.R;
 import com.mutwakilandroiddev.go4lunch.api.ApiClient;
 import com.mutwakilandroiddev.go4lunch.api.ApiInterface;
-import com.mutwakilandroiddev.go4lunch.api.Rate;
+import com.mutwakilandroiddev.go4lunch.utils.RestaurantRate;
 import com.mutwakilandroiddev.go4lunch.api.Restaurant;
 
 import com.mutwakilandroiddev.go4lunch.api.RestaurantHelper;
@@ -134,7 +136,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     star1 =  findViewById(R.id.star1_detail);
                     star2 =  findViewById(R.id.star2_detail);
                     star3 =  findViewById(R.id.star3_detail);
-                    Rate myRate = new Rate(restoRate, star1, star2, star3);
+                    RestaurantRate myRate = new RestaurantRate(restoRate, star1, star2, star3);
 
                     //-------------------------------------------------------------------------------------------
                     // Photo

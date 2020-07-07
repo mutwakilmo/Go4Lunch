@@ -1,4 +1,4 @@
-package com.mutwakilandroiddev.go4lunch;
+package com.mutwakilandroiddev.go4lunch.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -28,12 +28,10 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -45,11 +43,16 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import com.mutwakilandroiddev.go4lunch.BuildConfig;
+import com.mutwakilandroiddev.go4lunch.R;
 import com.mutwakilandroiddev.go4lunch.api.ApiClient;
 import com.mutwakilandroiddev.go4lunch.api.ApiInterface;
 
 import com.mutwakilandroiddev.go4lunch.api.UserHelper;
 import com.mutwakilandroiddev.go4lunch.base.BaseActivity;
+import com.mutwakilandroiddev.go4lunch.fragment.ListFragment;
+import com.mutwakilandroiddev.go4lunch.fragment.MapFragment;
+import com.mutwakilandroiddev.go4lunch.fragment.WorkmatesFragment;
 import com.mutwakilandroiddev.go4lunch.models.nearby.GooglePlacesResult;
 import com.mutwakilandroiddev.go4lunch.models.nearby.NearbyPlacesList;
 import com.mutwakilandroiddev.go4lunch.workmates_chat.ChatActivity;
