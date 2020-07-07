@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.main_activity_button_login)
     public void onClickLoginButton() {
+       // throw new RuntimeException("Test Crash");
         //Start appropriate activity
         if (this.isCurrentUserLogged()) {
             this.mainScreenActivity();

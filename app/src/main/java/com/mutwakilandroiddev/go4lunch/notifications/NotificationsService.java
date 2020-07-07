@@ -30,7 +30,7 @@ import java.util.List;
 
 public class NotificationsService extends FirebaseMessagingService {
     private static final String TAG = "NotificationsService";
-    private final int NOTIFICATION_ID = 007;
+    private final int NOTIFICATION_ID = 004;
     private final String NOTIFICATION_TAG = "FIRE_BASE_OC";
     public static final String SHARED_PREFS = "SharedPrefs";
     public static final String NOTIFICATION_PREFS = "notifications";
@@ -53,13 +53,17 @@ public class NotificationsService extends FirebaseMessagingService {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         notifOk = sharedPreferences.getBoolean(NOTIFICATION_PREFS, true);
         userId = UserHelper.getCurrentUserId();
-
+        if (remoteMessage.getNotification() != null) {
+            String message = remoteMessage.getNotification().getBody();
+            // 8 - Show notification after received message
+            checkIfNotifyToday();
+        }
         // We look if the user wants to receive notifications
-        checkIfNotifToday();
+
     }
 
 
-    private void checkIfNotifToday() {
+    private void checkIfNotifyToday() {
         Log.d(TAG, "checkIfNotifToday");
         LunchDateFormat forToday = new LunchDateFormat();
         final String today = forToday.getTodayDate();
@@ -161,7 +165,7 @@ public class NotificationsService extends FirebaseMessagingService {
         //  Build a Notification object
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.drawable.baseline_local_dining_24)
+                        .setSmallIcon(R.drawable.icon_location_selected)
                         .setContentTitle(getString(R.string.app_name))
                         .setContentText(m1)
                         .setAutoCancel(true)
