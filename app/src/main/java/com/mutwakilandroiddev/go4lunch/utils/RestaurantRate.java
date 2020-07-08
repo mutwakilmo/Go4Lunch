@@ -11,15 +11,7 @@ public class RestaurantRate {
 
         switch (rate_int) {
             case 0:
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.GONE);
-                star3.setVisibility(View.GONE);
-                break;
             case 1:
-                star1.setVisibility(View.GONE);
-                star2.setVisibility(View.GONE);
-                star3.setVisibility(View.GONE);
-                break;
             case 2:
                 star1.setVisibility(View.GONE);
                 star2.setVisibility(View.GONE);

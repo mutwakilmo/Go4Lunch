@@ -102,9 +102,9 @@ public class ListOfRestaurantsViewHolder extends RecyclerView.ViewHolder{
         // Assign the number of stars
         if (restaurantDetail.getRating()!= null) {
             Double rate = restaurantDetail.getRating();
-            RestaurantRate restaurantRate = new RestaurantRate(rate, star1, star2, star3);
+            RestaurantRate myRate = new RestaurantRate(rate, star1, star2, star3);
         } else {
-            RestaurantRate restaurantRate = new RestaurantRate(0, star1, star2, star3);
+            RestaurantRate myRate = new RestaurantRate(0, star1, star2, star3);
         }
 
         // Images

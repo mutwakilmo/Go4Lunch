@@ -16,24 +16,23 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.mutwakilandroiddev.go4lunch.view.MainActivity;
 import com.mutwakilandroiddev.go4lunch.R;
 import com.mutwakilandroiddev.go4lunch.api.Restaurant;
 import com.mutwakilandroiddev.go4lunch.api.RestaurantHelper;
 import com.mutwakilandroiddev.go4lunch.api.User;
 import com.mutwakilandroiddev.go4lunch.api.UserHelper;
 import com.mutwakilandroiddev.go4lunch.utils.LunchDateFormat;
+import com.mutwakilandroiddev.go4lunch.view.SplashLunchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class NotificationsService extends FirebaseMessagingService {
     private static final String TAG = "NotificationsService";
-    private final int NOTIFICATION_ID = 004;
-    private final String NOTIFICATION_TAG = "FIRE_BASE_OC";
-    public static final String SHARED_PREFS = "SharedPrefs";
-    public static final String NOTIFICATION_PREFS = "notifications";
+    private final int NOTIFICATION_ID = 007;
+    private final String NOTIFICATION_TAG = "FIREBASEOC";
+    public static final String SHARED_PREFS = "SharedPrefsPerso";
+    public static final String NOTIF_PREFS = "notifications";
 
 
     private String userId;
@@ -51,20 +50,16 @@ public class NotificationsService extends FirebaseMessagingService {
         Log.d(TAG, "onMessageReceived");
 
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        notifOk = sharedPreferences.getBoolean(NOTIFICATION_PREFS, true);
+        notifOk = sharedPreferences.getBoolean(NOTIF_PREFS, true);
         userId = UserHelper.getCurrentUserId();
-        if (remoteMessage.getNotification() != null) {
-            String message = remoteMessage.getNotification().getBody();
-            // 8 - Show notification after received message
-            checkIfNotifyToday();
-        }
-        // We look if the user wants to receive notifications
 
+        // We look if the user wants to receive notifications
+        checkIfNotifyToday();
     }
 
 
     private void checkIfNotifyToday() {
-        Log.d(TAG, "checkIfNotifToday");
+
         LunchDateFormat forToday = new LunchDateFormat();
         final String today = forToday.getTodayDate();
 
@@ -78,10 +73,10 @@ public class NotificationsService extends FirebaseMessagingService {
                     myRestoToday = user.getRestoToday();
                     String registeredDate = user.getRestoDate();
                     if (!myRestoToday.equals("")) {
-                        Log.d(TAG, "onSuccess: ");
+                        Log.d(TAG, "onSuccess: il y a une date");
                         // We check that the restaurant has been registered for today
                         if (registeredDate.equals(today)) {
-                            Log.d(TAG, "onSuccess: ");
+
                             // We check that he has subscribed to the sending of notifications
                             if (notifOk) {
                                 createPersonalizedMessage();
@@ -148,7 +143,7 @@ public class NotificationsService extends FirebaseMessagingService {
     private void sendVisualNotification(String m1, String m2, String m3, String m4) {
         Log.d(TAG, "sendVisualNotification");
         //  Create an Intent that will be shown when user will click on the Notification
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, SplashLunchActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         //  Create a Style for the Notification

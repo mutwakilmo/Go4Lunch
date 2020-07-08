@@ -132,11 +132,12 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     //------------------------------------------------------------------------------------------
                     // Rating
                     //-------------------------------------------------------------------------------------------
-                    double restoRate = mResto.getRating();
+                    Double restoRate = mResto.getRating();
                     star1 =  findViewById(R.id.star1_detail);
                     star2 =  findViewById(R.id.star2_detail);
                     star3 =  findViewById(R.id.star3_detail);
-                    RestaurantRate myRate = new RestaurantRate(restoRate, star1, star2, star3);
+                    RestaurantRate myRate;
+                    myRate = new RestaurantRate(restoRate, star1, star2, star3);
 
                     //-------------------------------------------------------------------------------------------
                     // Photo
@@ -155,7 +156,7 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     // Call
                     //-----------------------------------------------------------------------------------------------
                     //restoTel = resto.getPhone();
-                    restoTel = "06 28 08 57 50";  // for tests
+                    restoTel = "04 20 08 11 88";  // for tests
                     toPhone = findViewById(R.id.phone_detail_button);
                     toPhone.setOnClickListener(new View.OnClickListener() {
                         @Override
