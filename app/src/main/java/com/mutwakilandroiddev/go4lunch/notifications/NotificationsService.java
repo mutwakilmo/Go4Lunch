@@ -31,7 +31,7 @@ public class NotificationsService extends FirebaseMessagingService {
     private static final String TAG = "NotificationsService";
     private final int NOTIFICATION_ID = 007;
     private final String NOTIFICATION_TAG = "FIREBASEOC";
-    public static final String SHARED_PREFS = "SharedPrefsPerso";
+    public static final String SHARED_PREFS = "SharedPrefs";
     public static final String NOTIF_PREFS = "notifications";
 
 
