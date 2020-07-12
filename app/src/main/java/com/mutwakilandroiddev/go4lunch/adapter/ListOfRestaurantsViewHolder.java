@@ -100,8 +100,8 @@ public class ListOfRestaurantsViewHolder extends RecyclerView.ViewHolder{
         proximityTextView.setText(dist);
 
         // Assign the number of stars
-        if (restaurantDetail.getRating()!= null) {
-            Double rate = restaurantDetail.getRating();
+        if (restaurantDetail.getRating()!= 0.0F) {
+            float rate = restaurantDetail.getRating();
             RestaurantRate myRate = new RestaurantRate(rate, star1, star2, star3);
         } else {
             RestaurantRate myRate = new RestaurantRate(0, star1, star2, star3);

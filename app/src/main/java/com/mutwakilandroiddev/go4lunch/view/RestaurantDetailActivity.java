@@ -132,12 +132,15 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                     //------------------------------------------------------------------------------------------
                     // Rating
                     //-------------------------------------------------------------------------------------------
-                //    Double restoRate = mResto.getRating();
+                    //Todo NPE's bug
+                   float restoRate = mResto.getRating();
 
                     star1 =  findViewById(R.id.star1_detail);
                     star2 =  findViewById(R.id.star2_detail);
                     star3 =  findViewById(R.id.star3_detail);
-                 //  RestaurantRate myRate = new RestaurantRate(restoRate, star1, star2, star3);
+                  //  Double.valueOf(restoRate);
+                  RestaurantRate restaurantRate = new RestaurantRate(restoRate, star1, star2, star3);
+
 
                     //-------------------------------------------------------------------------------------------
                     // Photo

@@ -251,7 +251,7 @@ public class LunchActivity extends BaseActivity
 
         if (id == R.id.nav_mylunch) {
             startDetailActivity();
-            //Todo 2 start restaurant detail activity
+
 
         } else if (id == R.id.nav_settings) {
             openProfileActivity();
@@ -366,7 +366,7 @@ public class LunchActivity extends BaseActivity
                     if (response.body() != null) {
                         results = response.body().getResults();
                         fragment1.updateNearbyPlaces(results);
-                        //Todo 6fix bugs to display restaurant adapter
+
                     fragment2.updateNearbyPlaces(results);
 
                     }

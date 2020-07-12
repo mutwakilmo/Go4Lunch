@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- English -->
+    <string name="app_name">Go4lunch</string>
+    <string name="title_activity_maps">Mapa</string>
+    <string name="title_action_bar_hungry">¡Estoy hambriento!</string>
+    <string name="title_action_bar_workmate">Usuarias disponibles</string>
+
+    <string name="main_activity_description">Encuentre un buen restaurante e invite a sus compañeros de trabajo a almorzar.</string>
+
+
+    <!-- Strings for On Boarding Screen -->
+
+    <!-- Titles -->
+    <string name="first_slide_title">Bienvenidos</string>
+    <string name="second_slide_title">Pin it</string>
+    <string name="third_slide_title">Charla</string>
+    <string name="fourth_slide_title">Que te diviertas</string>
+
+    <!-- Description -->
+    <string name="first_slide_desc">Go4lunch le permitirá encontrar restaurantes cerca de usted y compartir su elección de restaurante con sus compañeros de trabajo.</string>
+    <string name="second_slide_desc">Todos los restaurantes cercanos se muestran en el mapa con pines personalizados.</string>
+    <string name="third_slide_desc">Justo antes de la pausa para el almuerzo, la aplicación notificará a los diferentes empleados y los invitará a unirse a sus compañeros de trabajo.</string>
+    <string name="fourth_slide_desc">El buen almuerzo es mucho más dulce cuando se comparte con amigos.</string>
+
+    <!-- Buttons -->
+    <string name="skip_btn">Omitir</string>
+    <string name="next_btn">Próximo</string>
+    <string name="let_get_started">Empecemos</string>
+
+
+    <!--OC-->
+
+
+    <string name="login">Registrarse</string>
+
+    <!-- NOTIFICATION SERVICE -->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="notification_title">"Has recibido una notificación "</string>
+
+    <!-- MAIN ACTIVITY -->
+    <string name="error_not_connected">Debes iniciar sesión!</string>
+    <string name="error_authentication_canceled">Autenticación cancelada</string>
+    <string name="error_no_internet">¡Sin conexión a Internet!</string>
+    <string name="error_unknown_error">Un error desconocido a ocurrido</string>
+    <string name="connection_succeed">Autenticación exitosa!</string>
+    <string name="button_login_text_logged">Mostrar perfil</string>
+    <string name="button_login_text_not_logged">Registrarse</string>
+
+    <!-- LOGIN ACTIVITY -->
+    <string name="toolbar_title_login_activity">Tu perfil</string>
+    <string name="text_input_username">Nombre de usuario</string>
+    <string name="text_view_email">Dirección de correo electrónico :</string>
+    <string name="button_update_account">Actualizar nombre de usuario</string>
+    <string name="button_delete_account">Borrar mi cuenta</string>
+    <string name="button_sign_out_account">Cerrar sesión</string>
+    <string name="info_no_email_found">Sin dirección de correo electrónico</string>
+    <string name="info_no_username_found">Sin nombre de usuario</string>
+    <string name="popup_message_confirmation_delete_account">¿Estás seguro de que quieres eliminar tu cuenta?</string>
+    <string name="popup_message_choice_yes">Si !</string>
+    <string name="popup_message_choice_no">No</string>
+    <string name="check_box_is_workmates">¿Eres un compañero de trabajo?</string>
+
+    <!-- CHAT ACTIVITY -->
+    <string name="text_input_title_chat_activity">Envía tu mensaje</string>
+    <string name="button_title_chat_activity">ENVIAR</string>
+    <string name="text_view_chat_error">Este hilo actualmente no contiene mensajes ...</string>
+
+
+    <!-- Navigation bottom View -->
+    <string name="title_map_view">Vista del mapa</string>
+    <string name="title_list_view">Vista de la lista</string>
+    <string name="title_workmates">Compañeros de trabajo</string>
+
+    <!-- Toolbar icon -->
+
+    <string name="toolbar_icon_search">Buscar restaurantes</string>
+    <!-- SEARCH -->
+    <string name="search_workmates">Buscar usuarios</string>
+    <string name="search_restaurant">Busca un restaurante</string>
+
+    <!-- Menu drawer-->
+    <string name="your_lunch">TU ALMUERZO</string>
+    <string name="settings">AJUSTES</string>
+    <string name="logout">CERRAR SESIÓN</string>
+    <string name="user">Nombre de usuario</string>
+    <string name="userEmail">Email</string>
+    <string name="navigation_drawer_open" translatable="false">Abrir el cajón de navegación</string>
+    <string name="navigation_drawer_close" translatable="false">Cerrar el cajón de navegación</string>
+
+    <!-- Fragment string -->
+    <string name="map_fragment_text">Mapa</string>
+    <string name="list_fragment_text">Lista</string>
+    <string name="mates_fragment_text">Compañeros</string>
+
+
+    <!-- SETTINGS -->
+    <string name="manifest_settings">Configuraciones</string>
+    <string name="update_email">Actualizar userEmail</string>
+    <string name="delete_account">Borrar cuenta</string>
+    <string name="user_name">Nombre de usuario</string>
+    <string name="update_user_name">Actualizar nombre de usuario</string>
+    <string name="login_image">imagen de inicio de sesión</string>
+    <string name="info_no_user_name_found">No se encontró nombre de usuario</string>
+    <string name="popup_title">¿Borrar cuenta?</string>
+
+
+
+
+    <!-- Google PURPOSE -->
+
+    <string name="toolbar_title">¡Tengo hambre!</string>
+    <string name="gps_location">trasladarse a su ubicación actual</string>
+    <string name="workmates">Compañeros de trabajo disponibles</string>
+    <string name="photo_profile">imagen de perfil de compañero de trabajo</string>
+    <!--WORKMATES -->
+    <string name="not_decided_ex">"Gaspard aún no ha decidido ".</string>
+    <string name="not_decided">"aún no ha decidido".</string>
+    <string name="decided">"comer en el restaurante:"</string>
+
+    <!--restaurant -->
+    <string name="no_openinghours">"Los horarios no están disponibles".</string>
+    <string name="isjoining">"se une!"</string>
+    <string name="no_hours">"Los horarios no están disponibles".</string>
+    <string name="open_at">"Abierto a"</string>
+    <string name="open_until">"Abierto hasta"</string>
+    <string name="closed">Cerrado</string>
+    <string name="closed_today">"Cerrado hoy"</string>
+    <string name="always_open">"Abierto 24/7"</string>
+    <string name="restaurant_name">"Nombre del restaurante"</string>
+    <string name="restaurant_address">"Dirección del restaurante"</string>
+    <string name="restaurant_open">"Horario de restaurante"</string>
+    <string name="restaurant_distance">"Distancia"</string>
+    <string name="logo_colleagues">"número de logo de colegas"</string>
+    <string name="restaurant_number_colleagues">"número de colegas"</string>
+    <string name="restaurant_star">"estrella"</string>
+    <string name="restaurant_photo">"foto"</string>
+    <!--DETAIL -->
+    <string name="call">"Llamada"</string>
+    <string name="website">"Sitio web"</string>
+    <string name="like">"Me gusta"</string>
+
+    <!-- PHONE CALL -->
+    <string name="no_phone_number">"El número de teléfono no está disponible"</string>
+    <string name="no_permission_for_call">"Go4Lunch no tiene permiso para hacer llamadas"</string>
+
+    <!-- WEBSITE -->
+    <string name="no_website">"La dirección del sitio web no está disponible"</string>
+    <string name="no_lunch">"¡Aún no has elegido un restaurante!"</string>
+    <string name="error">"Se ha producido un error"</string>
+
+
+    <!-- NOTIFICATION ACTIVITY -->
+    <string name="notif_title">"Mi restaurante"</string>
+    <string name="notif_message1">"Hoy su descanso para comer será en:"</string>
+    <string name="notif_message2">"Lo pasarás bien con:"</string>
+
+    <string name="notifications_onoff">"¿Le gustaría recibir una notificación al mediodía informándole sobre los felices compañeros de trabajo que se unirán a usted?"</string>
+
+    <string name="newsearch">"Relanzar la búsqueda"</string>
+    <!-- SETTINGS ACTIVITY -->
+    <string name="radius_text">"¿Hasta dónde quieres buscar? (En metros)"</string>
+    <string-array name="radius_array">
+        <item>200</item>
+        <item>500</item>
+        <item>1000</item>
+    </string-array>
+
+    <string name="type_text">"¿Qué tipo de establecimientos estás buscando?"</string>
+    <string-array name="type_array">
+        <item>restaurante</item>
+        <item>bar</item>
+        <item>cafe</item>
+    </string-array>
+
+
+    <!-- CHAT ACTIVITY -->
+    <string name="toolbar_title_chat_activity">Chats</string>
+    <string name="text_input_title_user_chat_activity">Redacta tu mensaje</string>
+    <string name="button_title_user_chat_activity">ENVIAR</string>
+    <string name="text_view_user_chat_error">Este hilo no contiene por el momento ningún mensaje</string>
+    <string name="popup_title_permission_files_access">Esta aplicación necesita permiso para funcionar.</string>
+    <string name="toast_title_no_image_chosen">"Ninguna imagen elegida ..."</string>
+    <string name="chat_image_preview">"Imagen"</string>
+    <string name="chat_add">"Agregar una imagen"</string>
+    <string name="chat_title_restaurants">"¿Qué restaurante de hoy?"</string>
+    <string name="chat_title_good">"¡Buenos tiempos!"</string>
+    <string name="chat_image_sent">"Imagen enviada"</string>
+    <string name="chat_image_profile">"Perfil de foto"</string>
+</resources>

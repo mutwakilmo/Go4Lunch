@@ -39,7 +39,7 @@ public class RestaurantDetailResult {
     private String placeId;
     @SerializedName("rating")
     @Expose
-    private Double rating;
+    private float rating;
     @SerializedName("reference")
     @Expose
     private String reference;
@@ -159,11 +159,11 @@ public class RestaurantDetailResult {
         this.placeId = placeId;
     }
 
-    public Double getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 
