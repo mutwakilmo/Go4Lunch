@@ -1,42 +1,34 @@
 {
   "project_info": {
-    "project_number": "421494414382",
-    "firebase_url": "https://openclassroomsgo4lunch.firebaseio.com",
-    "project_id": "openclassroomsgo4lunch",
-    "storage_bucket": "openclassroomsgo4lunch.appspot.com"
+    "project_number": "659047511754",
+    "firebase_url": "https://testandroid-cfaed.firebaseio.com",
+    "project_id": "testandroid-cfaed",
+    "storage_bucket": "testandroid-cfaed.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:421494414382:android:407deabfb04b0739f913bf",
+        "mobilesdk_app_id": "1:659047511754:android:e96f1774d071d8cc212633",
         "android_client_info": {
-          "package_name": "com.mutwakilandroiddev.go4lunch"
+          "package_name": "com.test.mathieu.go4Lunch"
         }
       },
       "oauth_client": [
         {
-          "client_id": "421494414382-80c89kfft2tdbubqb6uv2s8lpj71qb0m.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.mutwakilandroiddev.go4lunch",
-            "certificate_hash": "90f28cbc61f21d14a246d24d5a415fee11397a5e"
-          }
-        },
-        {
-          "client_id": "421494414382-ften2qpnue5uetu2gal6pd261r2mshti.apps.googleusercontent.com",
+          "client_id": "659047511754-bt2sfon4fkbsu6bgat1ir83b1uk3qam8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDXaVK4ERVdRvx6X7T2aTIU3TSVj1tW3A0"
+          "current_key": "AIzaSyCdhZdaJdlivXbJ-PZmyduWx2u-88hgKzg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "421494414382-ften2qpnue5uetu2gal6pd261r2mshti.apps.googleusercontent.com",
+              "client_id": "659047511754-bt2sfon4fkbsu6bgat1ir83b1uk3qam8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
